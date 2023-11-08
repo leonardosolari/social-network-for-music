@@ -2,3 +2,9 @@
 <h1>Profilo di <%= username %></h1>
 <h3>Id utente: <%= id %></h3>
 <h4>Email: <%= email %></h4>
+<h4>Generi preferiti: <%= fav_genres %></h4>
+<h4>Artisti preferiti: <%= fav_artists %></h4>
+
+<% if(currentUser._id == req_id) {%>
+    <a class="nav-link" href="/users/edit/<%= currentUser._id %>">Modifica</a>
+<% } %>

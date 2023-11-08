@@ -118,11 +118,18 @@ module.exports.logout = function(req, res) {
 
 
 /**
- * Mostra pagina utente
+ * Mostra informazioni su un utente
  */
 module.exports.showUser = async function (req,res) {
     const user = await User.findById(req.params.id)
-    res.render('users/profile', { id: user._id, email: user.email, username: user.username})
+    res.render('users/profile', { 
+        id: user._id, 
+        email: user.email, 
+        username: user.username, 
+        fav_genres: user.favourite_genres, 
+        fav_artists: user.favourite_artists,
+        req_id: req.params.id
+    })
 }
 
 
