@@ -29,4 +29,8 @@ router.route('/edit/:id')
     res.send('ok')
   })
 
+router.route('/change-password/:id')
+  .get(ensureAuth, ensureOwner, userController.renderChangePassword)
+  .post(ensureAuth, ensureOwner, userController.changePassword)
+
 module.exports = router;

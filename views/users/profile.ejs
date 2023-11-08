@@ -7,4 +7,6 @@
 
 <% if(currentUser._id == req_id) {%>
     <a class="nav-link" href="/users/edit/<%= currentUser._id %>">Modifica</a>
+    <a class="nav-link" href="/users/change-password/<%= currentUser._id %>">Cambia password</a>
+
 <% } %>

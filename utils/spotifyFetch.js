@@ -4,7 +4,7 @@ const clientId = process.env.SPOTIFY_CLIENT_ID
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
 
 
-//Genereates spotify token
+//Genera token spotify
 const generateSpotifyToken = async function() {
     const credentials = `${clientId}:${clientSecret}`;
     const encodedCredentials = Buffer.from(credentials).toString('base64');
@@ -25,7 +25,7 @@ const generateSpotifyToken = async function() {
 
 
 /**
- * Automatically adds auth token in spotify requests
+ * Wrapper per fetch alle API di spotify con inserimento automatico del token
  * @param {string} url - Spotify endpoint's url
  * @param {Object} options - Options for http request
  * @returns Promise representing the request's response
@@ -50,7 +50,7 @@ const fetchWithToken = async function(url, options = {}) {
 }
 
 /**
- * Performs a request to spotify's search api for the specified type
+ * Esegue ricerca su spotify per il tipo specificato
  * @param {string} type - Item type to search
  * @param {string} name - Name of the item to search
  * @returns Promise representing the search result
@@ -70,7 +70,7 @@ const authorizedSearch = async function(type, name) {
 }
 
 /**
- * Fetches the list of all available genres
+ * Recupera la lista di tutti i generi disponibili
  * @returns List of all genres
  */
 module.exports.fetchGenres = async function() {

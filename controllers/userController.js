@@ -132,5 +132,34 @@ module.exports.showUser = async function (req,res) {
     })
 }
 
+module.exports.renderChangePassword = function(req, res) {
+    res.render('users/changePassword')
+}
+
+module.exports.changePassword = async function(req,res) {
+    if (validator.isEmpty(req.body.oldPassword) || validator.isEmpty(req.body.newPassword) || validator.isEmpty(req.body.confirmPassword)){
+        req.flash('error','Tutti i campi devono essere riempiti')
+        return res.redirect('back')
+    }
+
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        req.flash('error', 'Le password non corrispondono')
+        return res.redirect('back')
+    }
+
+    const user = await User.findById(req.user.id)
+    
+    try {
+        await user.changePassword(req.body.oldPassword, req.body.newPassword)
+        req.flash('success', 'Password cambiata con successo')
+        res.redirect('/')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('/')
+    }
+
+    
+}
 
 
