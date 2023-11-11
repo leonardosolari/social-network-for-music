@@ -25,12 +25,15 @@ router.route('/:id')
   .get(ensureAuth, userController.showUser)
 
 router.route('/edit/:id')
-  .get(ensureAuth, ensureOwner, (req,res) => {
-    res.send('ok')
-  })
+  .get(ensureAuth, ensureOwner, userController.renderEditUser)
+  .post(ensureAuth, ensureOwner, userController.editUser)
 
 router.route('/change-password/:id')
   .get(ensureAuth, ensureOwner, userController.renderChangePassword)
   .post(ensureAuth, ensureOwner, userController.changePassword)
+
+  
+router.route('/delete/:id')
+  .get(ensureAuth, ensureOwner, userController.deleteUser)
 
 module.exports = router;

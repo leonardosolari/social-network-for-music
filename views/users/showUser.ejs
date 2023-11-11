@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+    <div class="row mt-5">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Profilo Utente</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Nome utente:</label>
+              <p><%= username %></p>
+            </div>
+            <div class="form-group">
+              <label>Email:</label>
+              <p><%= email %></p>
+            </div>
+            <div class="form-group">
+              <label>Generi preferiti:</label>
+              <ul>
+                <% fav_genres.forEach(function(genere) { %>
+                  <li><%= fav_genres %></li>
+                <% }) %>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label>Artisti preferiti:</label>
+              <ul>
+                <% fav_artists.forEach(function(artista) { %>
+                  <li><%= fav_artists %></li>
+                <% }) %>
+              </ul>
+            </div>
+
+            <% if(currentUser._id == req_id) {%>
+                <div class="text-center">
+                <a href="/users/edit/<%= currentUser._id %>" class="btn btn-success">Modifica</a>
+                <a href="/users/change-password/<%= currentUser._id %>" class="btn btn-primary">Cambia Password</a>
+                <a href="/users/delete/<%= currentUser._id %>" class="btn btn-danger">Elimina account</a>
+                </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

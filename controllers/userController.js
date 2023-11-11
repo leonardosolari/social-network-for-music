@@ -96,8 +96,9 @@ module.exports.login = async function(req, res, next) {
                 return next(err);
               }
               req.flash("success", 'Login effettuato con successo');
-              res.redirect(`/users/${req.user._id}`);
-              //res.redirect('/')
+                const redirectTo = req.session.redirectTo || '/';
+                delete req.session.redirectTo;
+                res.redirect(redirectTo);
             });
           })(req, res, next);
 
@@ -122,12 +123,12 @@ module.exports.logout = function(req, res) {
  */
 module.exports.showUser = async function (req,res) {
     const user = await User.findById(req.params.id)
-    res.render('users/profile', { 
-        id: user._id, 
+    res.render('users/showUser', { 
+        id: user.id, 
         email: user.email, 
         username: user.username, 
-        fav_genres: user.favourite_genres, 
-        fav_artists: user.favourite_artists,
+        fav_genres: user.favorite_genres, 
+        fav_artists: user.favorite_artists,
         req_id: req.params.id
     })
 }
@@ -161,5 +162,57 @@ module.exports.changePassword = async function(req,res) {
 
     
 }
+
+module.exports.deleteUser = async function(req,res) {
+    try {
+        const user = await User.findByIdAndDelete(req.user.id)
+        req.flash('success', 'Account utente eliminato')
+        res.redirect('/')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+}
+
+
+module.exports.renderEditUser = async function(req, res) {
+    const user = await User.findById(req.params.id)
+    res.render('users/editUser', { 
+        id: user.id, 
+        email: user.email, 
+        username: user.username, 
+        fav_genres: user.favorite_genres, 
+        fav_artists: user.favorite_artists,
+        req_id: req.params.id
+    })
+}
+
+module.exports.editUser = async function(req, res) {
+    const { username, email } = req.body
+    const id = req.user.id
+    
+    if (!validator.isEmail(email)) {
+        req.flash('error', 'Inserire una email valida')
+        res.redirect('back')
+    }
+
+    if (validator.isEmpty(username)) {
+        req.flash('error', 'Inserire un username valido')
+        res.redirect('back')
+    }
+    try {
+        const user = await User.findByIdAndUpdate(id, {username, email})
+        req.flash('success', 'Profilo aggiornato con successo')
+        res.redirect(`/users/${req.user.id}`)    
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+    
+}
+
+
 
 
