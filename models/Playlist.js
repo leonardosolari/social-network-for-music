@@ -9,6 +9,7 @@ const PlaylistSchema = new Schema({
     },
     description: {
         type: String,
+        required: true,
     },
     author: {
         type: Schema.Types.ObjectId,
@@ -22,6 +23,10 @@ const PlaylistSchema = new Schema({
         type: [String],
         default: [],
     },
+    private: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model("Playlist", PlaylistSchema);

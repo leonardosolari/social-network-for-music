@@ -82,6 +82,12 @@ module.exports.fetchGenres = async function() {
     }
 }
 
+module.exports.getTrackById = async function(id) {
+    const url = "https://api.spotify.com/v1/tracks/" + id
+    const response = await fetchWithToken(url)
+    return response
+}
+
 
 
 

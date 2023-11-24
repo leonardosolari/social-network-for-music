@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+    <div class="row mt-5">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Le tue playlist</h2>
+          </div>
+          <div class="card-body">
+            <% for (let playlist of userPlaylists) { %>
+                <div class="mb-3">
+                    <h3><%= playlist.name %></h3>
+                    <p><%= playlist.description %></p>
+                    <button>Visualizza</button>
+                </div>
+            <% } %>
+
+            <form action="/playlist/create">
+                <button class="btn btn-success btn-block mb-3">Crea nuova playlist</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

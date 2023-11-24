@@ -48,5 +48,16 @@ module.exports.searchAll = async function(req,res) {
     }
 }
 
+module.exports.searchTrackById = async function(req, res) {
+    try {
+        const spotifyResponse = await spotifyFetch.getTrackById(req.params.id)
+        res.send(spotifyParser.filterTrackFields(spotifyResponse))
+        console.log(typeof(spotifyResponse))
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error.message)
+    }
+}
+
 
 
