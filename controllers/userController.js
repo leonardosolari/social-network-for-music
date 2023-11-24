@@ -3,12 +3,14 @@ const validator = require('validator');
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const session = require('express-session')
+const { fetchGenres } = require('../utils/spotifyFetch')
 
-module.exports.renderRegister = (req, res) => {
+module.exports.renderRegister = async (req, res) => {
     //recupera i dati dalla session se disponibili
-    //const formData = req.session.signupFormData || {};
+    // const formData = req.session.signupFormData || {};
     const formData = {}
-    res.render('users/register', {formData});
+    const genres = await fetchGenres()
+    res.render('users/register', {formData, genres});
 }
 
 
@@ -20,7 +22,7 @@ module.exports.renderRegister = (req, res) => {
  */
 module.exports.register = async function (req, res) {
     try {
-        const { username, email, password, confirmPassword, } = req.body;
+        const { username, email, password, confirmPassword, genreSelector } = req.body;
         const validationErrors = [];
         if (validator.isEmpty(req.body.username))
             validationErrors.push({ msg: "L'username non può essere vuoto" });
@@ -49,7 +51,8 @@ module.exports.register = async function (req, res) {
 
         const user = new User({ 
             email: email,
-            username: username, 
+            username: username,
+            favorite_genres: [genreSelector], 
         });
         await User.register(user, password);
         req.flash('success', 'Nuovo utente registrato')
@@ -178,18 +181,20 @@ module.exports.deleteUser = async function(req,res) {
 
 module.exports.renderEditUser = async function(req, res) {
     const user = await User.findById(req.params.id)
+    const genres = await fetchGenres()
     res.render('users/editUser', { 
         id: user.id, 
         email: user.email, 
         username: user.username, 
         fav_genres: user.favorite_genres, 
         fav_artists: user.favorite_artists,
-        req_id: req.params.id
+        req_id: req.params.id,
+        genres: genres
     })
 }
 
 module.exports.editUser = async function(req, res) {
-    const { username, email } = req.body
+    const { username, email, genreSelector } = req.body
     const id = req.user.id
     
     if (!validator.isEmail(email)) {
@@ -201,8 +206,10 @@ module.exports.editUser = async function(req, res) {
         req.flash('error', 'Inserire un username valido')
         res.redirect('back')
     }
+
+    const favorite_genres = [genreSelector]
     try {
-        const user = await User.findByIdAndUpdate(id, {username, email})
+        const user = await User.findByIdAndUpdate(id, {username, email, favorite_genres})
         req.flash('success', 'Profilo aggiornato con successo')
         res.redirect(`/users/${req.user.id}`)    
     } catch (error) {

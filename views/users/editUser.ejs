@@ -17,6 +17,16 @@
                         <label for="email">Email</label>
                         <input value="<%= email %>" type="email" class="form-control" id="email" name="email" required>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="genre-selector" class="form-label">Selezionare genere preferito</label>
+                        <select class="form-select" data-width="fit" id="genre-selector" name="genreSelector">
+                            <option><%= fav_genres %></option>
+                            <% for (let genre of genres) { %>
+                                <option value="<%= genre %>"><%= genre %></option>
+                            <% } %>
+                        </select>
+                    </div>
                     
                     <button type="submit" class="btn btn-success m-3">Salva</button>
 

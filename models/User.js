@@ -13,8 +13,14 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
-    favorite_genres: { type: [String], default: [] },
-    favorite_artists: { type: [String], default: [] },
+    favorite_genres: { 
+        type: [String], 
+        default: [] 
+    },
+    favorite_artists: { 
+        type: [String], 
+        default: []
+    },
 })
 
 // plugin for passport-local-mongoose 

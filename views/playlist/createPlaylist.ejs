@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate')%>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div>
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Crea una nuova playlist</h5>
+                    <form action="/playlist/create" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Nome</label>
+                            <input class="form-control" type="text" id="name" name="name" value="" required autofocus>
+                            <div class="valid-feedback">
+                                Ok!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Descrizione</label>
+                            <input class="form-control" type="text" id="Description" name="Description" value="" required>
+                            <div class="valid-feedback">
+                                Ok!
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block">Crea</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

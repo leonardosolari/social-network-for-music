@@ -44,6 +44,7 @@ app.use(passport.session());
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRoutes');
 const searchRouter = require('./routes/searchRoutes')
+const playlistRouter = require('./routes/playlistRoutes')
 
 
 
@@ -75,6 +76,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
+app.use('/playlist', playlistRouter);
 
 connectDB()
 

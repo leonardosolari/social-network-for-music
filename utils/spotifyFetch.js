@@ -75,7 +75,8 @@ const authorizedSearch = async function(type, name) {
  */
 module.exports.fetchGenres = async function() {
     try {
-        return await fetchWithToken("https://api.spotify.com/v1/recommendations/available-genre-seeds")
+        const response = await fetchWithToken("https://api.spotify.com/v1/recommendations/available-genre-seeds")
+        return response.genres
     } catch (error) {
         console.log(error)
     }
