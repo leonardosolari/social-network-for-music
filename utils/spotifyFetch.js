@@ -59,7 +59,7 @@ const authorizedSearch = async function(type, name) {
     const params = {
         q: `${name}`,
         type: `${type}`,
-        limit: 5
+        limit: 10
     }
     try {
         return await fetchWithToken("https://api.spotify.com/v1/search", params)

@@ -1,4 +1,5 @@
 const Playlist = require('../models/Playlist')
+const User = require('../models/User')
 const {getTrackById} = require('../utils/spotifyFetch')
 const {filterTrackFields} = require('../utils/spotifyResponseParser')
 
@@ -27,17 +28,20 @@ module.exports.create = async function(req, res) {
 
 module.exports.renderUserPlaylists = async function(req, res) {
     const userPlaylists = await Playlist.find({collaborators: req.user.id})
-    res.render('playlist/userPlaylist', {userPlaylists})
+    const publicPlaylists = await Playlist.find({private: false})
+    res.render('playlist/userPlaylist', {userPlaylists, publicPlaylists})
 }
 
 module.exports.showPlaylist = async function(req, res) {
     const playlist = await Playlist.findById(req.params.id)
+    const author = await User.findById(playlist.author)
+    const username = author.username
     const playlistTracks = []
     for (let trackId of playlist.tracks) {
         const response = await getTrackById(trackId)
         playlistTracks.push(filterTrackFields(response))
     }
 
-    res.render('playlist/showPlaylist', {playlist, playlistTracks})
+    res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
 
 }

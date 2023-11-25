@@ -2,7 +2,7 @@
 <h1><%= playlist.name %></h1>
 <h3><%= playlist.description %></h3>
 <h5>Creata da:</h5>
-<p><%= playlist.author %></p>
+<a href="/users/<%= playlist.author %>"><p><%= username %></p></a>
 
 <section>
     <div class="container">
@@ -14,8 +14,7 @@
                         <img src="<%= track.image %>" class="card-img-top" alt="...">
                         <div class="card-body mt-3">
                             <h5 class="card-title"><%= track.name%></h5>
-                            <p class="card-text pt-2 pb-3">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <a href="#" class="btn btn-primary stretched-link">Go somewhere</a>
+                            <p class="card-text pt-2 pb-3"><%= track.album.name %></p>
                         </div>
                     </div>
                 </div>

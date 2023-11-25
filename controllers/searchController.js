@@ -41,7 +41,12 @@ module.exports.searchAll = async function(req,res) {
         const tracks = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
         const albums = spotifyResponse.albums.items.map(spotifyParser.filterAlbumFields)
         const artists = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
-        res.send(tracks + albums + artists)
+        const response = {
+            tracks: tracks,
+            albums: albums,
+            artists: artists
+        }
+        res.send(response)
         
     } catch (error) {
         res.status(500).send(error.message)
@@ -51,8 +56,8 @@ module.exports.searchAll = async function(req,res) {
 module.exports.searchTrackById = async function(req, res) {
     try {
         const spotifyResponse = await spotifyFetch.getTrackById(req.params.id)
-        res.send(spotifyParser.filterTrackFields(spotifyResponse))
-        console.log(typeof(spotifyResponse))
+        const track = spotifyParser.filterTrackFields(spotifyResponse)
+        res.render('search/trackInfo', {track})
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)

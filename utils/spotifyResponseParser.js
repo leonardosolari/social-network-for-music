@@ -27,7 +27,7 @@ module.exports.filterTrackFields = (item) => {
         duration_ms: item.duration_ms,
         explicit: item.explicit,
         artists: item.artists.map(artist => ({ name: artist.name, id: artist.id })),
-        album: { name: item.album.name, id: item.album.id },
+        album: { name: item.album.name, id: item.album.id, year: item.album.release_date },
         image: item.album.images[0].url
     };
 }

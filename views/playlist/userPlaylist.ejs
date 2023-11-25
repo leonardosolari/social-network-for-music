@@ -9,9 +9,10 @@
           <div class="card-body">
             <% for (let playlist of userPlaylists) { %>
                 <div class="mb-3">
-                    <h3><%= playlist.name %></h3>
+                    <a href="/playlist/<%= playlist._id%>"><h3><%= playlist.name %></h3></a>
                     <p><%= playlist.description %></p>
-                    <button>Visualizza</button>
+                    <p><%= playlist.collaborators.length %> followers</p>
+                    <hr>
                 </div>
             <% } %>
 
