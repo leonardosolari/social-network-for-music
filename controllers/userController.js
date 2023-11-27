@@ -75,13 +75,19 @@ module.exports.renderLogin = (req, res) => {
  */
 module.exports.login = async function(req, res, next) {
     try {
-        const {username, password} = req.body;
+        if (!req.body.username || !req.body.password) {
+            res.status(500)
+            return res.send()
+        }
+
         if (validator.isEmpty(req.body.username)) {
             req.flash('error', 'Inserire un username valido')
+            res.status(500)
             return res.redirect('/users/login')
         }
         if (validator.isEmpty(req.body.password)) {
             req.flash('error','La password non può essere vuota')
+            res.status(500)
             return res.redirect('/users/login')
         }
 
@@ -106,6 +112,7 @@ module.exports.login = async function(req, res, next) {
           })(req, res, next);
 
     } catch (error) {
+        res.status(500)
         console.log(error)
         req.flash('error', error)
         res.redirect('/users/login')

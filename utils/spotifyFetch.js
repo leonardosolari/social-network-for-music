@@ -88,6 +88,18 @@ module.exports.getTrackById = async function(id) {
     return response
 }
 
+module.exports.getAlbumById = async function(id) {
+    const url = "https://api.spotify.com/v1/albums/" + id
+    const response = await fetchWithToken(url)
+    return response
+}
+
+module.exports.getArtistById = async function(id) {
+    const url = "https://api.spotify.com/v1/artists/" + id
+    const response = await fetchWithToken(url)
+    return response
+}
+
 
 
 

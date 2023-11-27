@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate')%>
+
+<%- include('../partials/searchBar') %>
+
+<% for (let track of results) { %>
+    <%- include('../partials/songRow', {track: track})%>
+<% } %>
+
+<% for (let track of results) { %>
+    <%- include('../partials/songCard', {track: track})%>
+<% } %>

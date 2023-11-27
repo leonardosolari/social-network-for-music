@@ -1,0 +1,17 @@
+<div class="d-flex mt-2 mb-2">
+    <div class="flex-shrink-0">
+        <a href="/search/track/<%= track.id %>"><img src="<%= track.image %>" alt="Sample Image" style="width: 90px"></a>
+    </div>
+    <div class="flex-grow-1 ms-3">
+        <h5><%= track.name%></h5>
+        <h6>
+            <% let artistsString = "" %>
+            <% for (let artist of track.artists) { %>
+                <% artistsString += `${artist.name}, ` %>
+            <% } %>
+            <% artistsString = artistsString.replace(/,\s*$/, "") %>
+            <%= artistsString %>
+        </h6>
+        <p><%= track.album.name %></p>
+    </div>
+</div>

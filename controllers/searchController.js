@@ -5,7 +5,8 @@ module.exports.searchTracks = async function(req,res) {
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getTracks(query)
-        res.send(spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields))
+        const results = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
+        res.render('search/searchResults', {results})
         
     } catch (error) {
         res.status(500).send(error.message)
@@ -64,5 +65,8 @@ module.exports.searchTrackById = async function(req, res) {
     }
 }
 
+module.exports.renderSearchPage = function(req, res) {
+    res.render('search/searchPage')
+}
 
 

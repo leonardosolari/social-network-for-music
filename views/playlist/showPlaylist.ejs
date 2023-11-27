@@ -9,17 +9,8 @@
         <div class="row mt-5">
 
             <% for (let track of playlistTracks) {%>
-                <div class="col-lg-3 mt-5">
-                    <div class="card">
-                        <img src="<%= track.image %>" class="card-img-top" alt="...">
-                        <div class="card-body mt-3">
-                            <h5 class="card-title"><%= track.name%></h5>
-                            <p class="card-text pt-2 pb-3"><%= track.album.name %></p>
-                        </div>
-                    </div>
-                </div>
+                <%- include('../partials/songRow', {track: track})%>
             <% } %>
-
 
         </div>
     </div>

@@ -21,10 +21,11 @@ module.exports.filterAlbumFields = (item) => {
 }
 
 module.exports.filterTrackFields = (item) => {
+    const duration = new Date(item.duration_ms)
     return {
         name: item.name,
         id: item.id,
-        duration_ms: item.duration_ms,
+        duration: `${duration.getMinutes()}:${duration.getSeconds()}`,
         explicit: item.explicit,
         artists: item.artists.map(artist => ({ name: artist.name, id: artist.id })),
         album: { name: item.album.name, id: item.album.id, year: item.album.release_date },
