@@ -1,0 +1,16 @@
+<div class="col-lg-3 mt-5">
+    <div class="card">
+        <a href="/search/album/<%= album.id %>"><img src="<%= album.image %>" class="card-img-top" alt="..." style="width: 100%;"></a>
+        <div class="card-body mt-3">
+            <h5 class="card-title"><%= album.name%></h5>
+            <p class="card-text pt-2 pb-3">
+                <% let artistsString = "" %>
+                <% for (let artist of album.artists) { %>
+                    <% artistsString += `${artist.name}, ` %>
+                <% } %>
+                <% artistsString = artistsString.replace(/,\s*$/, "") %>
+                <%= artistsString %>    
+            </p>
+        </div>
+    </div>
+</div>

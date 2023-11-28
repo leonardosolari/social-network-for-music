@@ -1,8 +1,10 @@
 <script src="/javascripts/generateSearchLink.js"></script>
 
-<form onsubmit="urla()" method="GET" class="d-flex mb-5">
-    <input class="form-control me-2" type="text" placeholder="Cerca..." aria-label="Search" id="searchQuery">
-    <button class="btn btn-success me-2 type="submit">Cerca</button>
+<div class="container">
+<form onsubmit="return generateSearchLink()" method="GET" class="d-flex mb-5">
+    <input class="form-control me-2" type="text" placeholder="Cerca..." id="searchQuery">
+    <button class="btn btn-success me-2" type="submit">Cerca</button>
+
     <select class="form-select flex" id="searchType" name="searchType">
         <option value="all" selected>Tutto</option>
         <option value="tracks">Canzoni</option>
@@ -10,4 +12,5 @@
         <option value="artists">Artisti</option>
     </select>
 </form>
+</div>
 

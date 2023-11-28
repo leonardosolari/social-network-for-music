@@ -2,10 +2,10 @@
 
 <%- include('../partials/searchBar') %>
 
-<% for (let track of results) { %>
+<% for (let track of tracks) { %>
     <%- include('../partials/songRow', {track: track})%>
 <% } %>
 
-<% for (let track of results) { %>
-    <%- include('../partials/songCard', {track: track})%>
+<% for (let album of albums) { %>
+    <%- include('../partials/albumCard', {album: album})%>
 <% } %>

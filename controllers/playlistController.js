@@ -45,3 +45,17 @@ module.exports.showPlaylist = async function(req, res) {
     res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
 
 }
+
+module.exports.addSong = async function(req, res) {
+    try {
+        const playlist = await Playlist.findById(req.params.id)
+        const songId = req.body.songId
+        playlist.tracks.push(songId)
+        await playlist.save()
+        req.flash('success', 'Canzone aggiunta alla playlist')
+        res.redirect('back')
+    } catch (error) {
+        req.flash('error', 'Qualcosa è andato storto')
+        console.log(error)
+    }
+}

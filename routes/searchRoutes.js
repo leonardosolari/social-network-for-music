@@ -9,7 +9,11 @@ router.get('/tracks/:q', searchController.searchTracks)
 router.get('/albums/:q', searchController.searchAlbums)
 router.get('/artists/:q', searchController.searchArtists)
 router.get('/all/:q', searchController.searchAll)
+
 router.get('/track/:id', searchController.searchTrackById)
+router.get('/album/:id', searchController.searchAlbumById)
+
+router.get('/api/all/:q', searchController.searchAllApi)
 
 //mancano le route per cercare utenti e playlist
 

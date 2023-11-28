@@ -14,5 +14,8 @@ router.route('/')
 router.route('/:id')
     .get(ensureAuth, playlistController.showPlaylist)
 
+router.route('/:id/add')
+    .post(playlistController.addSong)
+
 
 module.exports = router;
