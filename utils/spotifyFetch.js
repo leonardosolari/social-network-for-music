@@ -100,6 +100,12 @@ module.exports.getArtistById = async function(id) {
     return response
 }
 
+module.exports.getArtistTopTracks = async function(id) {
+    const url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=IT`
+    const response = await fetchWithToken(url)
+    return response
+}
+
 
 
 

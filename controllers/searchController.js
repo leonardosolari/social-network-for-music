@@ -52,7 +52,7 @@ module.exports.searchAll = async function(req,res) {
             albums: albums,
             artists: artists
         }
-        res.render('search/searchResults', {tracks: results.tracks, albums: results.albums})
+        res.render('search/searchResults', {tracks: results.tracks, albums: results.albums, artists: results.artists})
         
     } catch (error) {
         res.status(500).send(error.message)
@@ -96,6 +96,16 @@ module.exports.searchAlbumById = async function(req, res) {
 
         album.tracks = albumTracks
         res.render('search/albumInfo', {album})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error.message)
+    }
+}
+
+module.exports.searchArtistById = async function(req, res) {
+    try {
+        const artist = await spotifyInfo.getArtistById(req.params.id)
+        res.render('search/artistInfo', {artist})
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)
@@ -151,6 +161,24 @@ module.exports.searchAllApi = async function(req,res) {
         res.send(results)
         
     } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
+
+module.exports.searchArtistByIdApi = async function(req, res) {
+    try {
+        const spotifyResponse = await spotifyFetch.getArtistById(req.params.id)
+        const artist = spotifyParser.filterArtistFields(spotifyResponse)
+        const trackResponse = await spotifyFetch.getArtistTopTracks(req.params.id)
+        const artistTopTracks = []
+        for (let track of trackResponse.tracks) {
+            artistTopTracks.push(spotifyParser.filterTrackFields(track))
+        }
+        artist.tracks = artistTopTracks
+        res.send(artist)
+    } catch (error) {
+        console.log(error)
         res.status(500).send(error.message)
     }
 }

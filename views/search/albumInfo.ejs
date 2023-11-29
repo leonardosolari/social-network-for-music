@@ -9,7 +9,10 @@
     <% artistsString = artistsString.replace(/,\s*$/, "") %>
     <%= artistsString %>
 </h3>
+<h4><%= album.release_date %></h4>
 
-<% for (let track of album.tracks) { %>
-    <%- include('../partials/songRow', {track: track})%>
-<% } %>
+<div class="mt-6">
+    <% for (let track of album.tracks) { %>
+        <%- include('../partials/songRow', {track: track})%>
+    <% } %>
+</div>

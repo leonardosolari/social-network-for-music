@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate')%>
+<img src="<%= artist.image %>" alt="">
+<h1><%= artist.name %></h1>
+<h3>Followers: <%= artist.followers %></h3>
+<h4><%= artist.genres %></h4>
+
+<div class="mb-4 mt-5">
+    <h3 class="mb-4">Canzoni più popolari</h3>
+    <% for (let track of artist.tracks) { %>
+        <%- include('../partials/songRow', {track: track})%>
+    <% } %>
+</div>
