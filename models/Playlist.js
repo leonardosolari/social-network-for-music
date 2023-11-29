@@ -26,6 +26,10 @@ const PlaylistSchema = new Schema({
     private: {
         type: Boolean,
         default: false
+    },
+    tags: {
+        type: [String],
+        default: [],
     }
 })
 

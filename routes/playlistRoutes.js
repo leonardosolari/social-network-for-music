@@ -18,4 +18,12 @@ router.route('/:id/add')
     .post(playlistController.addSong)
 
 
+router.route('/:id/edit')
+    .get(playlistController.renderEditPlaylist)
+    .post(playlistController.editPlaylist)
+
+router.route('/:id/delete')
+    .get(playlistController.deletePlaylist)
+
+
 module.exports = router;

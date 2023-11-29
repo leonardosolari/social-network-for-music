@@ -46,6 +46,47 @@ module.exports.showPlaylist = async function(req, res) {
 
 }
 
+
+module.exports.renderEditPlaylist = async function(req, res) {
+    const playlist = await Playlist.findById(req.params.id)
+    res.render('playlist/editPlaylist', {
+        id: playlist._id,
+        name: playlist.name,
+        description: playlist.description,
+        tags: playlist.tags
+    })
+}
+
+
+
+module.exports.editPlaylist = async function(req, res) {
+    try {
+        const {name, description} = req.body
+        const playlist = await Playlist.findByIdAndUpdate(req.params.id, {name, description})
+        req.flash('success', 'Playlist modificata con successo')
+        res.redirect(`/playlist/${req.params.id}`)
+
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+    }
+}
+
+
+module.exports.deletePlaylist = async function(req, res) {
+    try {
+        const playlist = await Playlist.findByIdAndDelete(req.params.id)
+        req.flash('success', 'Playlist eliminata')
+        res.redirect('/playlist')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+}
+
+
+
 module.exports.addSong = async function(req, res) {
     try {
         const playlist = await Playlist.findById(req.params.id)
