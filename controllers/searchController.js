@@ -1,6 +1,7 @@
 const spotifyFetch = require('../utils/spotifyFetch')
 const spotifyParser = require('../utils/spotifyResponseParser')
 const spotifyInfo = require('../utils/getSpotifyInfo')
+const Playlist = require('../models/Playlist')
 
 /**
  * GENERAL SEARCH
@@ -76,7 +77,8 @@ module.exports.searchAll = async function(req,res) {
 module.exports.searchTrackById = async function(req, res) {
     try {
         const track = await spotifyInfo.getTrackById(req.params.id)
-        res.render('search/trackInfo', {track})
+        const userPlaylists = await Playlist.find({author: req.user.id})
+        res.render('search/trackInfo', {track, userPlaylists})
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)

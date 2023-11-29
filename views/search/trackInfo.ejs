@@ -4,3 +4,75 @@
 <a href="/search/album/<%= track.album.id %>"><h3><%= track.album.name %></h3></a>
 <h4><%= track.album.release_date %></h4>
 <p>Durata: <%= track.duration %></p>
+
+
+
+<script src="/javascripts/addToPlaylist.js"></script>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#playlistModal">
+    Aggiungi a una playlist
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="playlistModal" tabindex="-1" aria-labelledby="playlistModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">A quale playlist vuoi aggiungere la canzone?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <%- include('../partials/songRow', track) %>
+
+            <select class="form-select" data-width="fit" id="playlistSelector" name="playlistSelector">
+                <option selected>Seleziona una playlist</option>
+                <% for (let playlist of userPlaylists) { %>
+                    <option value="<%= playlist.id %>"><%= playlist.name %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-primary" id="addButton" onclick="return addToPlaylist()">Aggiungi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addToPlaylist() {
+        
+        const modal = document.getElementById('playlistModal')
+        const playlistId = document.getElementById("playlistSelector").value
+        const songId = "<%= track.id %>";
+
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");   
+
+        const raw = JSON.stringify({
+            "songId": songId
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch(`/playlist/${playlistId}/add`, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .then(() => modal.hide())
+        .catch(error => console.log('error', error));
+        }
+
+        modal.hide()
+        document.getElementById('success-flash').display() = 'Canzone aggiunta con successo'
+
+  </script>
+
+
+
