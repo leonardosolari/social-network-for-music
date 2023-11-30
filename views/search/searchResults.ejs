@@ -2,29 +2,35 @@
 
 <%- include('../partials/searchBar') %>
 
-<div class="mb-4">
-    <h3 class="mb-4">Canzoni</h3>
-    <% for (let track of tracks) { %>
-        <%- include('../partials/songRow', {track: track})%>
-    <% } %>
-</div>
-
-
-<div class="container">
-    <h3>Album</h3>
-    <div class="d-flex mb-4" style="overflow-x: scroll;">
-        <% for (let album of albums) { %>
-            <%- include('../partials/albumCard', {album: album})%>
+<% if (tracks) { %>
+    <div class="mb-4">
+        <h3 class="mb-4">Canzoni</h3>
+        <% for (let track of tracks) { %>
+            <%- include('../partials/songRow', {track: track, showRemoveButton: false})%>
         <% } %>
     </div>
-</div>
+<% } %>
 
 
-<div class="container">
-    <h3>Artisti</h3>
-    <div class="d-flex mb-4" style="overflow-x: scroll;">
-        <% for (let artist of artists) { %>
-            <%- include('../partials/artistCard', {artist: artist})%>
-        <% } %>
+<% if (albums) { %>
+    <div class="container">
+        <h3>Album</h3>
+        <div class="d-flex mb-4" style="overflow-x: scroll;">
+            <% for (let album of albums) { %>
+                <%- include('../partials/albumCard', {album: album})%>
+            <% } %>
+        </div>
     </div>
-</div>
+<% } %>
+
+
+<% if (artists) { %>
+    <div class="container">
+        <h3>Artisti</h3>
+        <div class="d-flex mb-4" style="overflow-x: scroll;">
+            <% for (let artist of artists) { %>
+                <%- include('../partials/artistCard', {artist: artist})%>
+            <% } %>
+        </div>
+    </div>
+<% } %>

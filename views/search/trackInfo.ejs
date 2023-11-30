@@ -4,10 +4,9 @@
 <a href="/search/album/<%= track.album.id %>"><h3><%= track.album.name %></h3></a>
 <h4><%= track.album.release_date %></h4>
 <p>Durata: <%= track.duration %></p>
+<p id="songId" style="display: none;" value="<%= track.id %>"><%= track.id %></p>
 
 
-
-<script src="/javascripts/addToPlaylist.js"></script>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#playlistModal">
     Aggiungi a una playlist
@@ -23,10 +22,10 @@
         </div>
         <div class="modal-body">
 
-            <%- include('../partials/songRow', track) %>
+            <%- include('../partials/songRow', {track, showRemoveButton:false}) %>
 
             <select class="form-select" data-width="fit" id="playlistSelector" name="playlistSelector">
-                <option selected>Seleziona una playlist</option>
+                <option value="" selected>Seleziona una playlist</option>
                 <% for (let playlist of userPlaylists) { %>
                     <option value="<%= playlist.id %>"><%= playlist.name %></option>
                 <% } %>
@@ -40,39 +39,9 @@
     </div>
   </div>
 
-  <script>
-    function addToPlaylist() {
-        
-        const modal = document.getElementById('playlistModal')
-        const playlistId = document.getElementById("playlistSelector").value
-        const songId = "<%= track.id %>";
 
-
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");   
-
-        const raw = JSON.stringify({
-            "songId": songId
-        });
-
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-        };
-
-        fetch(`/playlist/${playlistId}/add`, requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .then(() => modal.hide())
-        .catch(error => console.log('error', error));
-        }
-
-        modal.hide()
-        document.getElementById('success-flash').display() = 'Canzone aggiunta con successo'
-
-  </script>
+<!--ADD TO PLAYLIST SCRIPT-->
+<script src="/javascripts/addToPlaylist.js"></script>
 
 
 

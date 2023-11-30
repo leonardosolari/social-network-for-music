@@ -33,16 +33,22 @@ module.exports.renderUserPlaylists = async function(req, res) {
 }
 
 module.exports.showPlaylist = async function(req, res) {
-    const playlist = await Playlist.findById(req.params.id)
-    const author = await User.findById(playlist.author)
-    const username = author.username
-    const playlistTracks = []
-    for (let trackId of playlist.tracks) {
-        const response = await getTrackById(trackId)
-        playlistTracks.push(filterTrackFields(response))
+    try {
+        const playlist = await Playlist.findById(req.params.id)
+        const author = await User.findById(playlist.author)
+        const username = author.username
+        const playlistTracks = []
+        for (let trackId of playlist.tracks) {
+            const response = await getTrackById(trackId)
+            playlistTracks.push(filterTrackFields(response))
+        }
+        res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        //res.redirect('back')
     }
-
-    res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
+    
 
 }
 
@@ -93,10 +99,30 @@ module.exports.addSong = async function(req, res) {
         const songId = req.body.songId
         playlist.tracks.push(songId)
         await playlist.save()
-        req.flash('success', 'Canzone aggiunta alla playlist')
         res.redirect('back')
+        req.flash('success', 'Canzone aggiunta alla playlist')
     } catch (error) {
         req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+        console.log(error)
+    }
+}
+
+module.exports.removeSong = async function(req, res) {
+    try {
+        const playlist = await Playlist.findById(req.params.id)
+        const songId = req.body.songId
+        const index = playlist.tracks.indexOf(songId);
+        if (index > -1) { //if found
+            playlist.tracks.splice(index, 1); 
+        }
+        await playlist.save()
+        req.flash('success', 'Canzone rimossa dalla playlist')
+        res.redirect('back')
+        
+    } catch (error) {
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
         console.log(error)
     }
 }

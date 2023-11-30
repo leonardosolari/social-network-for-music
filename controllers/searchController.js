@@ -12,10 +12,11 @@ module.exports.searchTracks = async function(req,res) {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getTracks(query)
         const results = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
-        res.render('search/searchResults', {tracks: results})
+        res.render('search/searchResults', {tracks: results, albums: undefined, artists: undefined})
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
+        console.log(error)
     }
 }
 
@@ -23,10 +24,12 @@ module.exports.searchAlbums = async function(req,res) {
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getAlbums(query)
-        res.send(spotifyResponse.albums.items.map(spotifyParser.filterAlbumFields))
+        const results = spotifyResponse.albums.items.map(spotifyParser.reducedFilterAlbumFields)
+        res.render('search/searchResults', {tracks: undefined, albums: results, artists: undefined})
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
+        console.log(error)
     }
 }
 
@@ -34,10 +37,12 @@ module.exports.searchArtists = async function(req,res) {
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getArtists(query)
-        res.send(spotifyResponse.artists.items.map(spotifyParser.filterArtistFields))
+        const results = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
+        res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: results})
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
+        console.log(error)
     }
 }
 
@@ -56,7 +61,7 @@ module.exports.searchAll = async function(req,res) {
         res.render('search/searchResults', {tracks: results.tracks, albums: results.albums, artists: results.artists})
         
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
         console.log(error)
     }
 }

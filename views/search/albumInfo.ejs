@@ -13,6 +13,6 @@
 
 <div class="mt-6">
     <% for (let track of album.tracks) { %>
-        <%- include('../partials/songRow', {track: track})%>
+        <%- include('../partials/songRow', {track: track, showRemoveButton: false})%>
     <% } %>
 </div>

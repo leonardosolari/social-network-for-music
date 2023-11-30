@@ -14,10 +14,6 @@ router.route('/')
 router.route('/:id')
     .get(ensureAuth, playlistController.showPlaylist)
 
-router.route('/:id/add')
-    .post(playlistController.addSong)
-
-
 router.route('/:id/edit')
     .get(playlistController.renderEditPlaylist)
     .post(playlistController.editPlaylist)
@@ -25,5 +21,10 @@ router.route('/:id/edit')
 router.route('/:id/delete')
     .get(playlistController.deletePlaylist)
 
+router.route('/:id/add')
+    .post(playlistController.addSong)
+
+router.route('/:id/remove')
+    .post(playlistController.removeSong)
 
 module.exports = router;

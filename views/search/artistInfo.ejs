@@ -7,6 +7,6 @@
 <div class="mb-4 mt-5">
     <h3 class="mb-4">Canzoni più popolari</h3>
     <% for (let track of artist.tracks) { %>
-        <%- include('../partials/songRow', {track: track})%>
+        <%- include('../partials/songRow', {track: track, showRemoveButton: false})%>
     <% } %>
 </div>

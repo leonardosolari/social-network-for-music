@@ -14,4 +14,10 @@
         </h6>
         <p><%= track.album.name %></p>
     </div>
+    <% if(showRemoveButton) { %>
+        <button class="btn btn-danger btn-sm float-right my-auto" id="but<%= track.id %>" style="height: 50%;">Rimuovi</button>
+    <% } %>
 </div>
+
+<!--REMOVE FROM PLAYLIST SCRIPT-->
+<script src="/javascripts/removeFromPlaylist.js" defer></script>

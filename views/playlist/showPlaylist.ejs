@@ -1,20 +1,28 @@
 <% layout('layouts/boilerplate')%>
 <h1><%= playlist.name %></h1>
 <h3><%= playlist.description %></h3>
-<h5>Creata da:</h5>
-<a href="/users/<%= playlist.author %>"><p><%= username %></p></a>
+<div>
+    <h5  style="display: inline-block;">Creata da: </h5> <a href="/users/<%= playlist.author %>"><p style="display: inline-block;"><%= username %></p></a>
+</div>
+
+
+<p id="playlistId" style="display: none;" value="<%= playlist.id %>"><%= playlist.id %></p>
+
 
 <a href="/playlist/<%= playlist.id %>/edit" class="btn btn-success">Modifica</a>
 <a href="/playlist/<%= playlist.id %>/delete" class="btn btn-danger">Elimina</a>
 
+<% if (playlistTracks.length > 0) { %>
 <section>
     <div class="container">
         <div class="row mt-5">
 
             <% for (let track of playlistTracks) {%>
-                <%- include('../partials/songRow', {track: track})%>
+                <%- include('../partials/songRow', {track: track, showRemoveButton: true})%>
+                <hr>
             <% } %>
 
         </div>
     </div>
 </section>
+<% } %>
