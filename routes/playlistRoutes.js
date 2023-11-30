@@ -3,6 +3,7 @@ const router = express.Router();
 const playlistController = require('../controllers/playlistController')
 const { ensureAuth } = require('../middleware/ensureAuth')
 const { ensureOwner } = require('../middleware/ensureOwner')
+const { isAuthor } = require('../middleware/isAuthor')
 
 router.route('/create')
     .get(ensureAuth, playlistController.renderCreate)
@@ -12,19 +13,19 @@ router.route('/')
     .get(ensureAuth, playlistController.renderUserPlaylists)
 
 router.route('/:id')
-    .get(ensureAuth, playlistController.showPlaylist)
+    .get(playlistController.showPlaylist)
 
 router.route('/:id/edit')
-    .get(playlistController.renderEditPlaylist)
-    .post(playlistController.editPlaylist)
+    .get(ensureAuth, isAuthor, playlistController.renderEditPlaylist)
+    .post(ensureAuth, isAuthor, playlistController.editPlaylist)
 
 router.route('/:id/delete')
-    .get(playlistController.deletePlaylist)
+    .get(ensureAuth, playlistController.deletePlaylist)
 
 router.route('/:id/add')
-    .post(playlistController.addSong)
+    .post(ensureAuth, isAuthor, playlistController.addSong)
 
 router.route('/:id/remove')
-    .post(playlistController.removeSong)
+    .post(ensureAuth, isAuthor, playlistController.removeSong)
 
 module.exports = router;

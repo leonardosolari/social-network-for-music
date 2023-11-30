@@ -34,3 +34,25 @@
         </div>
     </div>
 <% } %>
+
+<% if (users && users.length >= 1) { %>
+    <div class="container">
+        <h3>Utenti</h3>
+        <ul>
+            <% for (let user of users) { %>
+                <li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
+            <% } %>
+        </ul>
+    </div>
+<% } %>
+
+<% if (playlist && playlist.length >= 1) { %>
+    <div class="container">
+        <h3>Playlist</h3>
+        <ul>
+            <% for (let pl of playlist) { %>
+                <li><a href="/playlist/<%= pl.id %>"><%= pl.name %></a></li>
+            <% } %>
+        </ul>
+    </div>
+<% } %>

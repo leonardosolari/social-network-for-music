@@ -5,20 +5,27 @@
     <h5  style="display: inline-block;">Creata da: </h5> <a href="/users/<%= playlist.author %>"><p style="display: inline-block;"><%= username %></p></a>
 </div>
 
-
 <p id="playlistId" style="display: none;" value="<%= playlist.id %>"><%= playlist.id %></p>
 
-
-<a href="/playlist/<%= playlist.id %>/edit" class="btn btn-success">Modifica</a>
-<a href="/playlist/<%= playlist.id %>/delete" class="btn btn-danger">Elimina</a>
+<% if (currentUser._id.equals(playlist.author)) { %>
+    <a href="/playlist/<%= playlist.id %>/edit" class="btn btn-success">Modifica</a>
+    <a href="/playlist/<%= playlist.id %>/delete" class="btn btn-danger">Elimina</a>
+<% } %>
 
 <% if (playlistTracks.length > 0) { %>
 <section>
     <div class="container">
         <div class="row mt-5">
 
-            <% for (let track of playlistTracks) {%>
-                <%- include('../partials/songRow', {track: track, showRemoveButton: true})%>
+            <% for (let track of playlistTracks) { %>
+                
+                <% if(currentUser._id.equals(playlist.author)) { %>
+                    <%- include('../partials/songRow', {track: track, showRemoveButton: true})%>
+                <% } else { %>
+                    <%- include('../partials/songRow', {track: track, showRemoveButton: false})%>
+                <% } %>
+                
+                
                 <hr>
             <% } %>
 

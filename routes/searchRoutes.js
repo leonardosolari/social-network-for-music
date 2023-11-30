@@ -14,6 +14,9 @@ router.get('/track/:id', searchController.searchTrackById)
 router.get('/album/:id', searchController.searchAlbumById)
 router.get('/artist/:id', searchController.searchArtistById)
 
+router.get('/users/:q', searchController.searchUsers)
+router.get('/playlist/:q', searchController.searchPlaylist)
+
 router.get('/api/all/:q', searchController.searchAllApi)
 router.get('/api/artist/:id', searchController.searchArtistByIdApi)
 
