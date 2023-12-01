@@ -36,4 +36,10 @@ router.route('/change-password/:id')
 router.route('/delete/:id')
   .get(ensureAuth, ensureOwner, userController.deleteUser)
 
+router.route('/:id/followPlaylist/:p')
+  .get(ensureAuth, ensureOwner, userController.followPlaylist)
+
+  router.route('/:id/unfollowPlaylist/:p')
+  .get(ensureAuth, ensureOwner, userController.unfollowPlaylist)
+
 module.exports = router;

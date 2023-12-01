@@ -19,7 +19,7 @@ const PlaylistSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    collaborators: {
+    followers: {
         type: [Schema.Types.ObjectId],
         default: [],
     },

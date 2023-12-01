@@ -23,6 +23,10 @@ const UserSchema = new Schema({
         type: [String], 
         default: []
     },
+    saved_playlists: {
+        type: [Schema.Types.ObjectId],
+        default: [],
+    }
 })
 
 // plugin for passport-local-mongoose 

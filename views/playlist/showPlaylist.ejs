@@ -12,6 +12,14 @@
     <a href="/playlist/<%= playlist.id %>/delete" class="btn btn-danger">Elimina</a>
 <% } %>
 
+<% if (!playlist.followers.includes(currentUser._id) && !playlist.author.equals(currentUser._id)) { %>
+    <a href="/users/<%= currentUser._id %>/followPlaylist/<%= playlist.id %>" class="btn btn-primary">Segui</a>
+<% } %>
+
+<% if (playlist.followers.includes(currentUser._id) && !playlist.author.equals(currentUser._id)) { %>
+    <a href="/users/<%= currentUser._id %>/unfollowPlaylist/<%= playlist.id %>" class="btn btn-warning">Non seguire più</a>
+<% } %>
+
 <% if (playlistTracks.length > 0) { %>
 <section>
     <div class="container">

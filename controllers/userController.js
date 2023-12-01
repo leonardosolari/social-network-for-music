@@ -4,6 +4,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const session = require('express-session')
 const { fetchGenres } = require('../utils/spotifyFetch')
+const Playlist = require('../models/Playlist')
 
 module.exports.renderRegister = async (req, res) => {
     //recupera i dati dalla session se disponibili
@@ -227,6 +228,59 @@ module.exports.editUser = async function(req, res) {
     
 }
 
+
+module.exports.followPlaylist = async function(req, res) {
+    try {
+        const user = await User.findById(req.user.id)
+        const playlist = await Playlist.findById(req.params.p)
+    
+        if (!user.saved_playlists.includes(req.params.p)) {
+                user.saved_playlists.push(req.params.p)
+                playlist.followers.push(req.user.id)
+                await user.save()
+                await playlist.save()
+            } else {
+                req.flash('error', 'Hai già salvato questa playlist')
+                res.redirect('back')
+            }
+        req.flash('success', 'Playlist salvata')
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+    
+}
+
+
+module.exports.unfollowPlaylist = async function(req, res) {
+    try {
+        const user = await User.findById(req.user.id)
+        const playlist = await Playlist.findById(req.params.p)
+    
+        if (user.saved_playlists.includes(req.params.p)) {
+            const index = user.saved_playlists.indexOf(req.params.p)
+            if (index > -1) { //if found
+                user.saved_playlists.splice(index, 1); 
+                const userIndex = playlist.followers.indexOf(req.user.id)
+                playlist.followers.splice(userIndex, 1)
+                await user.save()
+                await playlist.save()
+            }
+        } else {
+            req.flash('error', 'Non segui questa playlist')
+            res.redirect('back')
+        }
+        req.flash('success', 'Playlist rimossa')
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+    
+}
 
 
 

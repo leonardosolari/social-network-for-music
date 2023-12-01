@@ -11,7 +11,7 @@
                 <div class="mb-3">
                     <a href="/playlist/<%= playlist._id%>"><h3><%= playlist.name %></h3></a>
                     <p><%= playlist.description %></p>
-                    <p><%= playlist.collaborators.length %> followers</p>
+                    <p><%= playlist.followers.length %> followers</p>
                     <hr>
                 </div>
             <% } %>
@@ -19,6 +19,29 @@
             <form action="/playlist/create">
                 <button class="btn btn-success btn-block mb-3">Crea nuova playlist</button>
             </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Playlist salvate</h2>
+          </div>
+          <div class="card-body">
+            <% for (let playlist of savedPlaylists) { %>
+                <div class="mb-3">
+                    <a href="/playlist/<%= playlist._id%>"><h3><%= playlist.name %></h3></a>
+                    <p><%= playlist.description %></p>
+                    <p>Followers: <%= playlist.followers.length %></p>
+                    <hr>
+                </div>
+            <% } %>
             </div>
           </div>
         </div>

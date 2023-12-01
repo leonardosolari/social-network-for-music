@@ -17,11 +17,16 @@
             </div>
             <div class="form-group">
               <label>Generi preferiti:</label>
+            <% if (fav_genres.length > 0 && fav_genres[0] != "") { %>  
               <ul>
                 <% fav_genres.forEach(function(genere) { %>
                   <li><%= fav_genres %></li>
                 <% }) %>
               </ul>
+            <% } else { %>
+              <p>Nessun genere selezionato</p>
+            <% } %>
+
             </div>
             <div class="form-group">
               <label>Artisti preferiti:</label>

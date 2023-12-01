@@ -27,9 +27,13 @@ module.exports.create = async function(req, res) {
 }
 
 module.exports.renderUserPlaylists = async function(req, res) {
-    const userPlaylists = await Playlist.find({collaborators: req.user.id})
-    const publicPlaylists = await Playlist.find({private: false})
-    res.render('playlist/userPlaylist', {userPlaylists, publicPlaylists})
+    const userPlaylists = await Playlist.find({author: req.user.id})
+    const user = await User.findById(req.user.id)
+    const savedPlaylists = []
+    for (let playlist of user.saved_playlists) {
+        savedPlaylists.push(await Playlist.findById(playlist))
+    }
+    res.render('playlist/userPlaylist', {userPlaylists, savedPlaylists: savedPlaylists})
 }
 
 module.exports.showPlaylist = async function(req, res) {
@@ -112,7 +116,7 @@ module.exports.removeSong = async function(req, res) {
     try {
         const playlist = await Playlist.findById(req.params.id)
         const songId = req.body.songId
-        const index = playlist.tracks.indexOf(songId);
+        const index = playlist.tracks.indexOf(songId)
         if (index > -1) { //if found
             playlist.tracks.splice(index, 1); 
         }

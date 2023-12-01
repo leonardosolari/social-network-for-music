@@ -37,7 +37,7 @@
                         <div class="mb-3">
                             <label for="genre-selector" class="form-label">Selezionare genere preferito</label>
                             <select class="form-select" data-width="fit" id="genre-selector" name="genreSelector">
-                                <option selected>Scegli il tuo genere musicale preferito</option>
+                                <option value="" selected>Scegli il tuo genere musicale preferito</option>
                                 <% for (let genre of genres) { %>
                                     <option value="<%= genre %>"><%= genre %></option>
                                 <% } %>
