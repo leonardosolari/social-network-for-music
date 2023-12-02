@@ -13,7 +13,15 @@ module.exports.searchTracks = async function(req,res) {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getTracks(query)
         const results = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
-        res.render('search/searchResults', {tracks: results, albums: undefined, artists: undefined, users: undefined, playlist: undefined})
+
+        res.format({
+            'text/html': function () {
+                res.render('search/searchResults', {tracks: results, albums: undefined, artists: undefined, users: undefined, playlist: undefined})
+            },
+            'application/json': function() {
+                res.send(results)
+            }
+        })
         
     } catch (error) {
         res.status(500).send(error)
@@ -26,7 +34,15 @@ module.exports.searchAlbums = async function(req,res) {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getAlbums(query)
         const results = spotifyResponse.albums.items.map(spotifyParser.reducedFilterAlbumFields)
-        res.render('search/searchResults', {tracks: undefined, albums: results, artists: undefined, users: undefined, playlist: undefined})
+
+        res.format({
+            'text/html': function () {
+                res.render('search/searchResults', {tracks: undefined, albums: results, artists: undefined, users: undefined, playlist: undefined})
+            },
+            'application/json': function() {
+                res.send(results)
+            }
+        })
         
     } catch (error) {
         res.status(500).send(error)
@@ -39,7 +55,15 @@ module.exports.searchArtists = async function(req,res) {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getArtists(query)
         const results = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
-        res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: results, users: undefined, playlist: undefined})
+
+        res.format({
+            'text/html': function () {
+                res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: results, users: undefined, playlist: undefined})
+            },
+            'application/json': function() {
+                res.send(results)
+            }
+        })
         
     } catch (error) {
         res.status(500).send(error)
@@ -69,7 +93,15 @@ module.exports.searchAll = async function(req,res) {
             users: users,
             playlist: playlist
         }
-        res.render('search/searchResults', {tracks: results.tracks, albums: results.albums, artists: results.artists, users: results.users, playlist: results.playlist})
+
+        res.format({
+            'text/html': function () {
+                res.render('search/searchResults', {tracks: results.tracks, albums: results.albums, artists: results.artists, users: results.users, playlist: results.playlist})
+            },
+            'application/json': function() {
+                res.send(results)
+            }
+        })
         
     } catch (error) {
         res.status(500).send(error)
@@ -81,7 +113,15 @@ module.exports.searchAll = async function(req,res) {
 module.exports.searchUsers = async function(req, res) {
     try {
        const users = await User.find({ username: { "$regex": req.params.q, '$options' : 'i'} })
-       res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: users, playlist: undefined})
+
+       res.format({
+        'text/html': function () {
+            res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: users, playlist: undefined})
+        },
+        'application/json': function() {
+            res.send(users)
+        }
+    })
     } catch (error) {
         res.status(500).send(error)
         console.log(error)
@@ -97,7 +137,15 @@ module.exports.searchPlaylist = async function(req, res) {
             ], 
             private: false
         })
-        res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: undefined, playlist: playlist})
+
+        res.format({
+            'text/html': function () {
+                res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: undefined, playlist: playlist})
+            },
+            'application/json': function() {
+                res.send(playlist)
+            }
+        })
     } catch (error) {
         res.status(500).send(error)
         console.log(error)
@@ -121,7 +169,14 @@ module.exports.searchTrackById = async function(req, res) {
     try {
         const track = await spotifyInfo.getTrackById(req.params.id)
         const userPlaylists = await Playlist.find({author: req.user.id})
-        res.render('search/trackInfo', {track, userPlaylists})
+        res.format({
+            'text/html': function () {
+                res.render('search/trackInfo', {track, userPlaylists})
+            },
+            'application/json': function() {
+                res.send(track)
+            }
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)
@@ -133,14 +188,20 @@ module.exports.searchAlbumById = async function(req, res) {
     try {
         const album = await spotifyInfo.getAlbumById(req.params.id)
         const albumTracks = []
-
         for (let track of album.tracks) {
             const result = await spotifyInfo.getTrackById(track.id)
             albumTracks.push(result)
         }
 
         album.tracks = albumTracks
-        res.render('search/albumInfo', {album})
+        res.format({
+            'text/html': function () {
+                res.render('search/albumInfo', {album})
+            },
+            'application/json': function() {
+                res.send(album)
+            }
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)
@@ -150,7 +211,14 @@ module.exports.searchAlbumById = async function(req, res) {
 module.exports.searchArtistById = async function(req, res) {
     try {
         const artist = await spotifyInfo.getArtistById(req.params.id)
-        res.render('search/artistInfo', {artist})
+        res.format({
+            'text/html': function () {
+                res.render('search/artistInfo', {artist})
+            },
+            'application/json': function() {
+                res.send(artist)
+            }
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)
@@ -173,57 +241,4 @@ module.exports.searchArtistById = async function(req, res) {
 
 module.exports.renderSearchPage = function(req, res) {
     res.render('search/searchPage')
-}
-
-
-
-
-/**
- * 
- * 
- * 
- *  PROVA PROVA PROVA PROVA
- * 
- * 
- * 
- * 
- */
-
-
-
-module.exports.searchAllApi = async function(req,res) {
-    try {
-        const query = req.params.q
-        const spotifyResponse = await spotifyFetch.getAll(query)
-        const tracks = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
-        const albums = spotifyResponse.albums.items.map(spotifyParser.reducedFilterAlbumFields)
-        const artists = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
-        const results = {
-            tracks: tracks,
-            albums: albums,
-            artists: artists
-        }
-        res.send(results)
-        
-    } catch (error) {
-        res.status(500).send(error.message)
-    }
-}
-
-
-module.exports.searchArtistByIdApi = async function(req, res) {
-    try {
-        const spotifyResponse = await spotifyFetch.getArtistById(req.params.id)
-        const artist = spotifyParser.filterArtistFields(spotifyResponse)
-        const trackResponse = await spotifyFetch.getArtistTopTracks(req.params.id)
-        const artistTopTracks = []
-        for (let track of trackResponse.tracks) {
-            artistTopTracks.push(spotifyParser.filterTrackFields(track))
-        }
-        artist.tracks = artistTopTracks
-        res.send(artist)
-    } catch (error) {
-        console.log(error)
-        res.status(500).send(error.message)
-    }
 }

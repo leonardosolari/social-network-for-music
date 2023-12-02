@@ -23,7 +23,7 @@ router.route('/logout')
 
 router.route('/:id')
   .get(ensureAuth, userController.showUser)
-
+  
 router.route('/edit/:id')
   .get(ensureAuth, ensureOwner, userController.renderEditUser)
   .post(ensureAuth, ensureOwner, userController.editUser)
@@ -36,10 +36,5 @@ router.route('/change-password/:id')
 router.route('/delete/:id')
   .get(ensureAuth, ensureOwner, userController.deleteUser)
 
-router.route('/:id/followPlaylist/:p')
-  .get(ensureAuth, ensureOwner, userController.followPlaylist)
-
-  router.route('/:id/unfollowPlaylist/:p')
-  .get(ensureAuth, ensureOwner, userController.unfollowPlaylist)
 
 module.exports = router;

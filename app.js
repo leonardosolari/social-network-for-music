@@ -10,6 +10,8 @@ const connectDB = require("./config/database");
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const MongoStore = require("connect-mongo");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./docs/swagger_output.json')
 
 const app = express();
 
@@ -77,6 +79,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
 app.use('/playlist', playlistRouter);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 connectDB()
 

@@ -9,7 +9,7 @@
           <div class="card-body">
             <% for (let playlist of userPlaylists) { %>
                 <div class="mb-3">
-                    <a href="/playlist/<%= playlist._id%>"><h3><%= playlist.name %></h3></a>
+                    <a href="/playlist/<%= playlist.id%>"><h3><%= playlist.name %></h3></a>
                     <p><%= playlist.description %></p>
                     <p><%= playlist.followers.length %> followers</p>
                     <hr>
@@ -36,7 +36,7 @@
           <div class="card-body">
             <% for (let playlist of savedPlaylists) { %>
                 <div class="mb-3">
-                    <a href="/playlist/<%= playlist._id%>"><h3><%= playlist.name %></h3></a>
+                    <a href="/playlist/<%= playlist.id%>"><h3><%= playlist.name %></h3></a>
                     <p><%= playlist.description %></p>
                     <p>Followers: <%= playlist.followers.length %></p>
                     <hr>

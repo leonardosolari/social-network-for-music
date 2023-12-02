@@ -26,14 +26,26 @@ module.exports.create = async function(req, res) {
     }
 }
 
-module.exports.renderUserPlaylists = async function(req, res) {
+module.exports.userPlaylists = async function(req, res) {
     const userPlaylists = await Playlist.find({author: req.user.id})
     const user = await User.findById(req.user.id)
     const savedPlaylists = []
     for (let playlist of user.saved_playlists) {
         savedPlaylists.push(await Playlist.findById(playlist))
     }
-    res.render('playlist/userPlaylist', {userPlaylists, savedPlaylists: savedPlaylists})
+    const response = {
+        userPlaylists: userPlaylists,
+        savedPlaylists: savedPlaylists
+    }
+
+    res.format({
+        'text/html': function () {
+            res.render('playlist/userPlaylist', {userPlaylists, savedPlaylists: savedPlaylists})
+        },
+        'application/json': function() {
+            res.send(response)
+        }
+    })
 }
 
 module.exports.showPlaylist = async function(req, res) {
@@ -46,7 +58,16 @@ module.exports.showPlaylist = async function(req, res) {
             const response = await getTrackById(trackId)
             playlistTracks.push(filterTrackFields(response))
         }
-        res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
+        
+        res.format({
+            'text/html': function () {
+                res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
+            },
+            'application/json': function() {
+                res.send(playlist)
+            }
+        })
+        
     } catch (error) {
         console.log(error)
         req.flash('error', 'Qualcosa è andato storto')
@@ -129,4 +150,57 @@ module.exports.removeSong = async function(req, res) {
         res.redirect('back')
         console.log(error)
     }
+}
+
+module.exports.follow = async function(req, res) {
+    try {
+        const user = await User.findById(req.user.id)
+        const playlist = await Playlist.findById(req.params.id)
+    
+        if (!user.saved_playlists.includes(req.params.id)) {
+                user.saved_playlists.push(req.params.id)
+                playlist.followers.push(req.user.id)
+                await user.save()
+                await playlist.save()
+            } else {
+                req.flash('error', 'Hai già salvato questa playlist')
+                res.redirect('back')
+            }
+        req.flash('success', 'Playlist salvata')
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+    
+}
+
+
+module.exports.unfollow = async function(req, res) {
+    try {
+        const user = await User.findById(req.user.id)
+        const playlist = await Playlist.findById(req.params.id)
+    
+        if (user.saved_playlists.includes(req.params.id)) {
+            const index = user.saved_playlists.indexOf(req.params.id)
+            if (index > -1) { //if found
+                user.saved_playlists.splice(index, 1); 
+                const userIndex = playlist.followers.indexOf(req.user.id)
+                playlist.followers.splice(userIndex, 1)
+                await user.save()
+                await playlist.save()
+            }
+        } else {
+            req.flash('error', 'Non segui questa playlist')
+            res.redirect('back')
+        }
+        req.flash('success', 'Playlist rimossa')
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+    
 }
