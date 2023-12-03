@@ -13,7 +13,11 @@ const MongoStore = require("connect-mongo");
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./docs/swagger_output.json')
 
-const app = express();
+const app = express()
+
+const PORT = 8585;
+const HOST = '127.0.0.1';
+app.listen(PORT, HOST);
 
 
 
