@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const searchController = require('../controllers/searchController')
+const searchController = require('../controllers/searchController');
+const { ensureAuth } = require('../middleware/ensureAuth');
 
 router.get('/', searchController.renderSearchPage)
 
@@ -16,5 +17,7 @@ router.get('/artist/:id', searchController.searchArtistById)
 
 router.get('/users/:q', searchController.searchUsers)
 router.get('/playlist/:q', searchController.searchPlaylist)
+router.post('/artist/:id/follow', ensureAuth, searchController.followArtist)
+router.post('/artist/:id/unfollow', ensureAuth, searchController.unfollowArtist)
 
 module.exports = router

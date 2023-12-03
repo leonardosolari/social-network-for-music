@@ -23,6 +23,7 @@ module.exports.searchTracks = async function(req,res) {
                 res.render('search/searchResults', {tracks: results, albums: undefined, artists: undefined, users: undefined, playlist: undefined})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(results)
             }
         })
@@ -48,6 +49,7 @@ module.exports.searchAlbums = async function(req,res) {
                 res.render('search/searchResults', {tracks: undefined, albums: results, artists: undefined, users: undefined, playlist: undefined})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(results)
             }
         })
@@ -73,6 +75,7 @@ module.exports.searchArtists = async function(req,res) {
                 res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: results, users: undefined, playlist: undefined})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(results)
             }
         })
@@ -98,7 +101,8 @@ module.exports.searchAll = async function(req,res) {
         const playlist = await Playlist.find({ 
             $or: [
                 {name: { "$regex": req.params.q, '$options' : 'i'}},
-                {description : { "$regex": req.params.q, "$options" : "i"}}
+                {description : { "$regex": req.params.q, "$options" : "i"}},
+                {tags: { "$regex": req.params.q, '$options' : 'i'}},
             ], 
             private: false
         })
@@ -115,6 +119,7 @@ module.exports.searchAll = async function(req,res) {
                 res.render('search/searchResults', {tracks: results.tracks, albums: results.albums, artists: results.artists, users: results.users, playlist: results.playlist})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(results)
             }
         })
@@ -139,6 +144,7 @@ module.exports.searchUsers = async function(req, res) {
             res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: users, playlist: undefined})
         },
         'application/json': function() {
+            res.status(200)
             res.send(users)
         }
     })
@@ -157,7 +163,8 @@ module.exports.searchPlaylist = async function(req, res) {
         const playlist = await Playlist.find({ 
             $or: [
                 {name: { "$regex": req.params.q, '$options' : 'i'}},
-                {description : { "$regex": req.params.q, "$options" : "i"}}
+                {description : { "$regex": req.params.q, "$options" : "i"}},
+                {tags: { "$regex": req.params.q, '$options' : 'i'}},
             ], 
             private: false
         })
@@ -167,6 +174,7 @@ module.exports.searchPlaylist = async function(req, res) {
                 res.render('search/searchResults', {tracks: undefined, albums: undefined, artists: undefined, users: undefined, playlist: playlist})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(playlist)
             }
         })
@@ -202,6 +210,7 @@ module.exports.searchTrackById = async function(req, res) {
                 res.render('search/trackInfo', {track, userPlaylists})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(track)
             }
         })
@@ -231,6 +240,7 @@ module.exports.searchAlbumById = async function(req, res) {
                 res.render('search/albumInfo', {album})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(album)
             }
         })
@@ -247,17 +257,80 @@ module.exports.searchArtistById = async function(req, res) {
     */
     try {
         const artist = await spotifyInfo.getArtistById(req.params.id)
+        const user = await User.findById(req.user.id)
         res.format({
             'text/html': function () {
-                res.render('search/artistInfo', {artist})
+                res.render('search/artistInfo', {artist, user})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(artist)
             }
         })
     } catch (error) {
         console.log(error)
         res.status(500).send(error.message)
+    }
+}
+
+
+
+/**
+ * 
+ * GESTIONE ARTISTI PREFERITI 
+ */
+module.exports.followArtist = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Add artist to current user's favourite artists"
+    */
+    try {
+        const user = await User.findById(req.user.id)
+        if (!user.favorite_artists.includes(req.params.id)) {
+            user.favorite_artists.push(req.params.id)
+            await user.save()
+        } else {
+            res.status(500)
+            req.flash('error', 'Segui già questo artista')
+            res.redirect('back')
+        }
+        req.flash('success', 'Artista seguito')
+        res.status(200)
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
+    }
+}
+
+module.exports.unfollowArtist = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Remove artist from current user's favourite artists"
+    */
+    try {
+        const user = await User.findById(req.user.id)
+        if (user.favorite_artists.includes(req.params.id)) {
+            const index = user.favorite_artists.indexOf(req.params.id)
+            if (index > -1) { //se trovato
+                user.favorite_artists.splice(index, 1)
+            }
+            await user.save()
+        } else {
+            res.status(500)
+            req.flash('error', 'Non segui questo artista')
+            res.redirect('back')
+        }
+        req.flash('success', 'Non segui più questo artista')
+        res.status(200)
+        res.redirect('back')
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+        req.flash('error', 'Qualcosa è andato storto')
+        res.redirect('back')
     }
 }
 

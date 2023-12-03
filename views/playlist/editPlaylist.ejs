@@ -17,6 +17,11 @@
                         <label for="description">Descrizione</label>
                         <input value="<%= description %>" type="text" class="form-control" id="description" name="description" required>
                     </div>
+
+                    <div class="form-group mb-3">
+                        <label for="tags">Inserire tag separati da underscore (_)</label>
+                        <input value="<%= tags %>" type="text" class="form-control" id="tags" name="tags" placeholder="es: shrek_palude_dreamworks" required>
+                    </div>
                     
                     <button type="submit" class="btn btn-success m-3">Salva</button>
 

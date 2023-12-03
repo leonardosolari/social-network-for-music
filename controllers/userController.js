@@ -5,6 +5,7 @@ const LocalStrategy = require('passport-local')
 const session = require('express-session')
 const { fetchGenres } = require('../utils/spotifyFetch')
 const Playlist = require('../models/Playlist')
+const {getArtistById} = require('../utils/getSpotifyInfo')
 
 module.exports.renderRegister = async (req, res) => {
     /*
@@ -45,6 +46,7 @@ module.exports.register = async function (req, res) {
 
         if (validationErrors.length) {
             //se ho avuto errori salvo i valori del form nella session e faccio redirect
+            res.status(500)
             req.session.signupFormData = req.body;
             for (let error of validationErrors) {
                 req.flash('error', error.msg)
@@ -60,11 +62,13 @@ module.exports.register = async function (req, res) {
             favorite_genres: [genreSelector], 
         });
         await User.register(user, password);
+        res.status(200)
         req.flash('success', 'Nuovo utente registrato')
         res.redirect('/')
 
 
     } catch (error) {
+        res.status(500)
         req.flash('error', error.message)
         res.redirect('/users/register')
     }
@@ -88,18 +92,18 @@ module.exports.login = async function(req, res, next) {
     
     try {
         if (!req.body.username || !req.body.password) {
-            res.status(500)
+            res.status(400)
             return res.send()
         }
 
         if (validator.isEmpty(req.body.username)) {
             req.flash('error', 'Inserire un username valido')
-            res.status(500)
+            res.status(400)
             return res.redirect('/users/login')
         }
         if (validator.isEmpty(req.body.password)) {
             req.flash('error','La password non può essere vuota')
-            res.status(500)
+            res.status(400)
             return res.redirect('/users/login')
         }
 
@@ -137,10 +141,16 @@ module.exports.logout = function(req, res) {
     #swagger.tags = ["Users"]
     #swagger.summary = "Logs out current user (AUTH required)"
     */
-    req.logout(() => {
-        req.flash('success', 'Logout effettuato con successo')
-        res.redirect('/')
-      })
+    try {
+        req.logout(() => {
+            req.flash('success', 'Logout effettuato con successo')
+            res.redirect('/')
+          })
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+    }
+    
 }
 
 
@@ -150,23 +160,33 @@ module.exports.showUser = async function (req,res) {
     #swagger.tags = ["Users"]
     #swagger.summary = "Get information about the user with the given id (AUTH required)"
     */
-    
-    const user = await User.findById(req.params.id)
-    res.format({
-        'text/html': function () {
-            res.render('users/showUser', { 
-                id: user.id, 
-                email: user.email, 
-                username: user.username, 
-                fav_genres: user.favorite_genres, 
-                fav_artists: user.favorite_artists,
-                req_id: req.params.id
-            })
-        },
-        'application/json': function() {
-            res.send(user)
+    try {
+        const user = await User.findById(req.params.id)
+        const followedArtists = []
+        for (let artistId of user.favorite_artists) {
+            followedArtists.push(await getArtistById(artistId))
         }
-    })
+        res.format({
+            'text/html': function () {
+                res.render('users/showUser', { 
+                    id: user.id, 
+                    email: user.email, 
+                    username: user.username, 
+                    fav_genres: user.favorite_genres, 
+                    fav_artists: followedArtists,
+                    req_id: req.params.id
+                })
+            },
+            'application/json': function() {
+                res.send(user)
+            }
+        })
+        res.status(200)
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+    }
+    
 }
 
 
@@ -185,24 +205,26 @@ module.exports.changePassword = async function(req,res) {
     */
     if (validator.isEmpty(req.body.oldPassword) || validator.isEmpty(req.body.newPassword) || validator.isEmpty(req.body.confirmPassword)){
         req.flash('error','Tutti i campi devono essere riempiti')
+        res.status(400)
         return res.redirect('back')
     }
 
     if (req.body.newPassword !== req.body.confirmPassword) {
+        res.status(400)
         req.flash('error', 'Le password non corrispondono')
         return res.redirect('back')
     }
-
-    const user = await User.findById(req.user.id)
     
     try {
+        const user = await User.findById(req.user.id)
         await user.changePassword(req.body.oldPassword, req.body.newPassword)
+        res.status(200)
         req.flash('success', 'Password cambiata con successo')
         res.redirect('/')
     } catch (error) {
         console.log(error)
         req.flash('error', 'Qualcosa è andato storto')
-        res.redirect('/')
+        res.status(500).redirect('/')
     }
 
     
@@ -216,11 +238,11 @@ module.exports.deleteUser = async function(req,res) {
     try {
         const user = await User.findByIdAndDelete(req.user.id)
         req.flash('success', 'Account utente eliminato')
-        res.redirect('/')
+        res.status(200).redirect('/')
     } catch (error) {
         console.log(error)
         req.flash('error', 'Qualcosa è andato storto')
-        res.redirect('back')
+        res.status(500).redirect('back')
     }
 }
 
@@ -253,11 +275,13 @@ module.exports.editUser = async function(req, res) {
     
     if (!validator.isEmail(email)) {
         req.flash('error', 'Inserire una email valida')
+        res.status(400)
         res.redirect('back')
     }
 
     if (validator.isEmpty(username)) {
         req.flash('error', 'Inserire un username valido')
+        res.status(400)
         res.redirect('back')
     }
 
@@ -265,13 +289,23 @@ module.exports.editUser = async function(req, res) {
     try {
         const user = await User.findByIdAndUpdate(id, {username, email, favorite_genres})
         req.flash('success', 'Profilo aggiornato con successo')
+        res.status(200)
         res.redirect(`/users/${req.user.id}`)    
     } catch (error) {
         console.log(error)
         req.flash('error', 'Qualcosa è andato storto')
+        res.status(500)
         res.redirect('back')
     }
     
+}
+
+module.exports.followArtist = async function(req, res) {
+
+}
+
+module.exports.unfollowArtist = async function(req, res) {
+
 }
 
 

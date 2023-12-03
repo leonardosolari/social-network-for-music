@@ -32,8 +32,8 @@ const PlaylistSchema = new Schema({
         default: false
     },
     tags: {
-        type: [String],
-        default: [],
+        type: String,
+        default: "",
     }
 })
 

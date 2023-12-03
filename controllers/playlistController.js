@@ -2,6 +2,7 @@ const Playlist = require('../models/Playlist')
 const User = require('../models/User')
 const {getTrackById} = require('../utils/spotifyFetch')
 const {filterTrackFields} = require('../utils/spotifyResponseParser')
+const validator = require('validator');
 
 module.exports.renderCreate = function(req,res) {
     /*
@@ -29,6 +30,7 @@ module.exports.create = async function(req, res) {
         res.redirect('/')
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('/playlist/create')
     }
@@ -55,7 +57,7 @@ module.exports.userPlaylists = async function(req, res) {
             res.render('playlist/userPlaylist', {userPlaylists, savedPlaylists: savedPlaylists})
         },
         'application/json': function() {
-            res.send(response)
+            res.status(200).send(response)
         }
     })
 }
@@ -69,6 +71,7 @@ module.exports.showPlaylist = async function(req, res) {
         const playlist = await Playlist.findById(req.params.id)
         const author = await User.findById(playlist.author)
         const username = author.username
+        const tags = playlist.tags.split("_")
         const playlistTracks = []
         for (let trackId of playlist.tracks) {
             const response = await getTrackById(trackId)
@@ -77,15 +80,17 @@ module.exports.showPlaylist = async function(req, res) {
         
         res.format({
             'text/html': function () {
-                res.render('playlist/showPlaylist', {playlist, playlistTracks, username})
+                res.render('playlist/showPlaylist', {playlist, playlistTracks, username, tags})
             },
             'application/json': function() {
+                res.status(200)
                 res.send(playlist)
             }
         })
         
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('/')
     }
@@ -116,13 +121,15 @@ module.exports.editPlaylist = async function(req, res) {
     #swagger.summary = "Edit playlist with given id (AUTH required)"
     */
     try {
-        const {name, description} = req.body
-        const playlist = await Playlist.findByIdAndUpdate(req.params.id, {name, description})
+        const {name, description, tags} = req.body
+        const playlist = await Playlist.findByIdAndUpdate(req.params.id, {name, description, tags})
+        res.status(200)
         req.flash('success', 'Playlist modificata con successo')
         res.redirect(`/playlist/${req.params.id}`)
 
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
     }
 }
@@ -135,10 +142,12 @@ module.exports.deletePlaylist = async function(req, res) {
     */
     try {
         const playlist = await Playlist.findByIdAndDelete(req.params.id)
+        res.status(200)
         req.flash('success', 'Playlist eliminata')
         res.redirect('/playlist')
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('back')
     }
@@ -156,9 +165,11 @@ module.exports.addSong = async function(req, res) {
         const songId = req.body.songId
         playlist.tracks.push(songId)
         await playlist.save()
-        res.redirect('back')
+        res.status(200)
         req.flash('success', 'Canzone aggiunta alla playlist')
+        res.redirect('back')
     } catch (error) {
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('back')
         console.log(error)
@@ -178,10 +189,12 @@ module.exports.removeSong = async function(req, res) {
             playlist.tracks.splice(index, 1); 
         }
         await playlist.save()
+        res.status(200)
         req.flash('success', 'Canzone rimossa dalla playlist')
         res.redirect('back')
         
     } catch (error) {
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('back')
         console.log(error)
@@ -203,13 +216,16 @@ module.exports.follow = async function(req, res) {
                 await user.save()
                 await playlist.save()
             } else {
+                res.status(500)
                 req.flash('error', 'Hai già salvato questa playlist')
                 res.redirect('back')
             }
         req.flash('success', 'Playlist salvata')
+        res.status(200)
         res.redirect('back')
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('back')
     }
@@ -236,13 +252,16 @@ module.exports.unfollow = async function(req, res) {
                 await playlist.save()
             }
         } else {
+            res.status(500)
             req.flash('error', 'Non segui questa playlist')
             res.redirect('back')
         }
+        res.status(200)
         req.flash('success', 'Playlist rimossa')
         res.redirect('back')
     } catch (error) {
         console.log(error)
+        res.status(500)
         req.flash('error', 'Qualcosa è andato storto')
         res.redirect('back')
     }

@@ -16,7 +16,7 @@
               <p><%= email %></p>
             </div>
             <div class="form-group">
-              <label>Generi preferiti:</label>
+              <label>Genere preferito:</label>
             <% if (fav_genres.length > 0 && fav_genres[0] != "") { %>  
               <ul>
                 <% fav_genres.forEach(function(genere) { %>
@@ -31,9 +31,9 @@
             <div class="form-group">
               <label>Artisti preferiti:</label>
               <ul>
-                <% fav_artists.forEach(function(artista) { %>
-                  <li><%= fav_artists %></li>
-                <% }) %>
+                <% for (let artist of fav_artists) { %>
+                  <li><%= artist.name %></li>
+                <% } %>
               </ul>
             </div>
 
