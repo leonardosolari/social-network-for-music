@@ -4,10 +4,18 @@ const {getTrackById} = require('../utils/spotifyFetch')
 const {filterTrackFields} = require('../utils/spotifyResponseParser')
 
 module.exports.renderCreate = function(req,res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Render playlist creation page (AUTH required)"
+    */
     res.render('playlist/createPlaylist')
 }
 
 module.exports.create = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Create new playlist and save it in the database (AUTH required)"
+    */
     const { name, description, private } = req.body
     try {
         await Playlist.create({
@@ -27,6 +35,10 @@ module.exports.create = async function(req, res) {
 }
 
 module.exports.userPlaylists = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Gets playlists created or saved by the user with the given id (AUTH required)"
+    */
     const userPlaylists = await Playlist.find({author: req.user.id})
     const user = await User.findById(req.user.id)
     const savedPlaylists = []
@@ -49,6 +61,10 @@ module.exports.userPlaylists = async function(req, res) {
 }
 
 module.exports.showPlaylist = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Get playlist by id (AUTH required)"
+    */
     try {
         const playlist = await Playlist.findById(req.params.id)
         const author = await User.findById(playlist.author)
@@ -71,7 +87,7 @@ module.exports.showPlaylist = async function(req, res) {
     } catch (error) {
         console.log(error)
         req.flash('error', 'Qualcosa è andato storto')
-        //res.redirect('back')
+        res.redirect('/')
     }
     
 
@@ -79,6 +95,10 @@ module.exports.showPlaylist = async function(req, res) {
 
 
 module.exports.renderEditPlaylist = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Render playlist edit page (AUTH required)"
+    */
     const playlist = await Playlist.findById(req.params.id)
     res.render('playlist/editPlaylist', {
         id: playlist._id,
@@ -91,6 +111,10 @@ module.exports.renderEditPlaylist = async function(req, res) {
 
 
 module.exports.editPlaylist = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Edit playlist with given id (AUTH required)"
+    */
     try {
         const {name, description} = req.body
         const playlist = await Playlist.findByIdAndUpdate(req.params.id, {name, description})
@@ -105,6 +129,10 @@ module.exports.editPlaylist = async function(req, res) {
 
 
 module.exports.deletePlaylist = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Delete playlist with given id (AUTH required)"
+    */
     try {
         const playlist = await Playlist.findByIdAndDelete(req.params.id)
         req.flash('success', 'Playlist eliminata')
@@ -119,6 +147,10 @@ module.exports.deletePlaylist = async function(req, res) {
 
 
 module.exports.addSong = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Add song to the playlist with the given id (AUTH required)"
+    */
     try {
         const playlist = await Playlist.findById(req.params.id)
         const songId = req.body.songId
@@ -134,6 +166,10 @@ module.exports.addSong = async function(req, res) {
 }
 
 module.exports.removeSong = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Remove song from the playlist with given id"
+    */
     try {
         const playlist = await Playlist.findById(req.params.id)
         const songId = req.body.songId
@@ -153,6 +189,10 @@ module.exports.removeSong = async function(req, res) {
 }
 
 module.exports.follow = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Follow playlist with the igven id"
+    */
     try {
         const user = await User.findById(req.user.id)
         const playlist = await Playlist.findById(req.params.id)
@@ -178,6 +218,10 @@ module.exports.follow = async function(req, res) {
 
 
 module.exports.unfollow = async function(req, res) {
+    /*
+    #swagger.tags = ["Playlist"]
+    #swagger.summary = "Unfollow playlist with the given id"
+    */
     try {
         const user = await User.findById(req.user.id)
         const playlist = await Playlist.findById(req.params.id)

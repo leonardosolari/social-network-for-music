@@ -9,6 +9,10 @@ const User = require('../models/User')
  */
 
 module.exports.searchTracks = async function(req,res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Search tracks by query using Spotify API"
+    */
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getTracks(query)
@@ -30,6 +34,10 @@ module.exports.searchTracks = async function(req,res) {
 }
 
 module.exports.searchAlbums = async function(req,res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Search albums by query using Spotify API"
+    */
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getAlbums(query)
@@ -51,6 +59,10 @@ module.exports.searchAlbums = async function(req,res) {
 }
 
 module.exports.searchArtists = async function(req,res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Search artists by query using Spotify API"
+    */
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getArtists(query)
@@ -72,6 +84,10 @@ module.exports.searchArtists = async function(req,res) {
 }
 
 module.exports.searchAll = async function(req,res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Search tracks, albums and artists by query using Spotify API. Search users and playlists in the database by query"
+    */
     try {
         const query = req.params.q
         const spotifyResponse = await spotifyFetch.getAll(query)
@@ -111,6 +127,10 @@ module.exports.searchAll = async function(req,res) {
 
 
 module.exports.searchUsers = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get user by query from the database"
+    */
     try {
        const users = await User.find({ username: { "$regex": req.params.q, '$options' : 'i'} })
 
@@ -129,6 +149,10 @@ module.exports.searchUsers = async function(req, res) {
 }
 
 module.exports.searchPlaylist = async function(req, res) {
+        /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get playlist by query from the database"
+    */
     try {
         const playlist = await Playlist.find({ 
             $or: [
@@ -166,6 +190,10 @@ module.exports.searchPlaylist = async function(req, res) {
  */
 
 module.exports.searchTrackById = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get track by id using Spotify API"
+    */
     try {
         const track = await spotifyInfo.getTrackById(req.params.id)
         const userPlaylists = await Playlist.find({author: req.user.id})
@@ -185,6 +213,10 @@ module.exports.searchTrackById = async function(req, res) {
 
 
 module.exports.searchAlbumById = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get album by id using Spotify API"
+    */
     try {
         const album = await spotifyInfo.getAlbumById(req.params.id)
         const albumTracks = []
@@ -209,6 +241,10 @@ module.exports.searchAlbumById = async function(req, res) {
 }
 
 module.exports.searchArtistById = async function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get artist by id using Spotify API"
+    */
     try {
         const artist = await spotifyInfo.getArtistById(req.params.id)
         res.format({
@@ -228,17 +264,15 @@ module.exports.searchArtistById = async function(req, res) {
 
 
 
-
-
-
-
-
-
 /**
 * RENDERING
  */
 
 
 module.exports.renderSearchPage = function(req, res) {
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Render search page"
+    */
     res.render('search/searchPage')
 }

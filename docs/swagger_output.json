@@ -13,6 +13,7 @@
   "paths": {
     "/": {
       "get": {
+        "summary": "Render home page",
         "description": "",
         "responses": {
           "default": {
@@ -21,28 +22,12 @@
         }
       }
     },
-    "/prova": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/users/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/users/register": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Renders the user registration page",
         "description": "",
         "responses": {
           "default": {
@@ -51,6 +36,10 @@
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Creates new user and saves it in the database",
         "description": "",
         "parameters": [
           {
@@ -87,6 +76,10 @@
     },
     "/users/login": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Renders the user login page",
         "description": "",
         "responses": {
           "default": {
@@ -95,6 +88,10 @@
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "User login",
         "description": "",
         "parameters": [
           {
@@ -125,10 +122,14 @@
     },
     "/users/logout": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Logs out current user (AUTH required)",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -138,7 +139,7 @@
         "tags": [
           "Users"
         ],
-        "summary": "Get current logged user (AUTH required)",
+        "summary": "Get information about the user with the given id (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -151,12 +152,19 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/users/edit/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Renders current user's page to edit account information (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -167,12 +175,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Edit current user profile (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -201,14 +213,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/users/change-password/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Renders the form for password change (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -219,12 +235,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Change current user's password (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -253,14 +273,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/users/delete/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Deletes current user's profile from the database (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -271,14 +295,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/search/": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Render search page",
         "description": "",
         "responses": {
           "default": {
@@ -289,6 +317,10 @@
     },
     "/search/tracks/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search tracks by query using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -310,6 +342,10 @@
     },
     "/search/albums/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search albums by query using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -331,6 +367,10 @@
     },
     "/search/artists/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search artists by query using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -352,6 +392,10 @@
     },
     "/search/all/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search tracks, albums and artists by query using Spotify API. Search users and playlists in the database by query",
         "description": "",
         "parameters": [
           {
@@ -373,6 +417,10 @@
     },
     "/search/track/{id}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get track by id using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -394,6 +442,10 @@
     },
     "/search/album/{id}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get album by id using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -415,6 +467,10 @@
     },
     "/search/artist/{id}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get artist by id using Spotify API",
         "description": "",
         "parameters": [
           {
@@ -436,6 +492,10 @@
     },
     "/search/users/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get user by query from the database",
         "description": "",
         "parameters": [
           {
@@ -457,6 +517,10 @@
     },
     "/search/playlist/{q}": {
       "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get playlist by query from the database",
         "description": "",
         "parameters": [
           {
@@ -478,14 +542,22 @@
     },
     "/playlist/create": {
       "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Render playlist creation page (AUTH required)",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       },
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Create new playlist and save it in the database (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -508,24 +580,35 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/": {
       "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Gets playlists created or saved by the user with the given id (AUTH required)",
         "description": "",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}": {
       "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Get playlist by id (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -544,6 +627,10 @@
     },
     "/playlist/{id}/edit": {
       "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Render playlist edit page (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -554,12 +641,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       },
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Edit playlist with given id (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -585,14 +676,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}/delete": {
       "get": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Delete playlist with given id (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -603,14 +698,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}/add": {
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Add song to the playlist with the given id (AUTH required)",
         "description": "",
         "parameters": [
           {
@@ -633,14 +732,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}/remove": {
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Remove song from the playlist with given id",
         "description": "",
         "parameters": [
           {
@@ -663,14 +766,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}/follow": {
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Follow playlist with the igven id",
         "description": "",
         "parameters": [
           {
@@ -681,14 +788,18 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
     },
     "/playlist/{id}/unfollow": {
       "post": {
+        "tags": [
+          "Playlist"
+        ],
+        "summary": "Unfollow playlist with the given id",
         "description": "",
         "parameters": [
           {
@@ -699,8 +810,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }

@@ -7,6 +7,11 @@ const { fetchGenres } = require('../utils/spotifyFetch')
 const Playlist = require('../models/Playlist')
 
 module.exports.renderRegister = async (req, res) => {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Renders the user registration page"
+    */
+    
     //recupera i dati dalla session se disponibili
     // const formData = req.session.signupFormData || {};
     const formData = {}
@@ -15,13 +20,12 @@ module.exports.renderRegister = async (req, res) => {
 }
 
 
-/**
- * Registrazione utente
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
+
 module.exports.register = async function (req, res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Creates new user and saves it in the database"
+    */
     try {
         const { username, email, password, confirmPassword, genreSelector } = req.body;
         const validationErrors = [];
@@ -67,14 +71,21 @@ module.exports.register = async function (req, res) {
 } 
 
 module.exports.renderLogin = (req, res) => {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Renders the user login page"
+    */
     res.render('users/login');
 }
 
 
-/**
- * Login utente
- */
+
 module.exports.login = async function(req, res, next) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "User login"
+    */
+    
     try {
         if (!req.body.username || !req.body.password) {
             res.status(500)
@@ -122,6 +133,10 @@ module.exports.login = async function(req, res, next) {
 
 
 module.exports.logout = function(req, res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Logs out current user (AUTH required)"
+    */
     req.logout(() => {
         req.flash('success', 'Logout effettuato con successo')
         res.redirect('/')
@@ -129,13 +144,11 @@ module.exports.logout = function(req, res) {
 }
 
 
-/**
- * Mostra informazioni su un utente
- */
+
 module.exports.showUser = async function (req,res) {
     /*
     #swagger.tags = ["Users"]
-    #swagger.summary = "Get current logged user (AUTH required)"
+    #swagger.summary = "Get information about the user with the given id (AUTH required)"
     */
     
     const user = await User.findById(req.params.id)
@@ -158,10 +171,18 @@ module.exports.showUser = async function (req,res) {
 
 
 module.exports.renderChangePassword = function(req, res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Renders the form for password change (AUTH required)"
+    */
     res.render('users/changePassword')
 }
 
 module.exports.changePassword = async function(req,res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Change current user's password (AUTH required)"
+    */
     if (validator.isEmpty(req.body.oldPassword) || validator.isEmpty(req.body.newPassword) || validator.isEmpty(req.body.confirmPassword)){
         req.flash('error','Tutti i campi devono essere riempiti')
         return res.redirect('back')
@@ -188,6 +209,10 @@ module.exports.changePassword = async function(req,res) {
 }
 
 module.exports.deleteUser = async function(req,res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Deletes current user's profile from the database (AUTH required)"
+    */
     try {
         const user = await User.findByIdAndDelete(req.user.id)
         req.flash('success', 'Account utente eliminato')
@@ -201,6 +226,10 @@ module.exports.deleteUser = async function(req,res) {
 
 
 module.exports.renderEditUser = async function(req, res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Renders current user's page to edit account information (AUTH required)"
+    */
     const user = await User.findById(req.params.id)
     const genres = await fetchGenres()
     res.render('users/editUser', { 
@@ -215,6 +244,10 @@ module.exports.renderEditUser = async function(req, res) {
 }
 
 module.exports.editUser = async function(req, res) {
+    /*
+    #swagger.tags = ["Users"]
+    #swagger.summary = "Edit current user profile (AUTH required)"
+    */
     const { username, email, genreSelector } = req.body
     const id = req.user.id
     

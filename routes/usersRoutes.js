@@ -5,10 +5,6 @@ const { ensureAuth } = require('../middleware/ensureAuth')
 const { ensureOwner } = require('../middleware/ensureOwner')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 
 router.route('/register')
     .get(userController.renderRegister)
