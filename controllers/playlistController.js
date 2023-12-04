@@ -1,6 +1,6 @@
 const Playlist = require('../models/Playlist')
 const User = require('../models/User')
-const {getTrackById} = require('../utils/spotifyFetch')
+const {fetchTrackById: getTrackById} = require('../utils/spotifyFetch')
 const {filterTrackFields} = require('../utils/spotifyResponseParser')
 const validator = require('validator');
 

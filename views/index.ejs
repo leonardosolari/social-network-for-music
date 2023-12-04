@@ -1,2 +1,17 @@
 <% layout('layouts/boilerplate')%>
     <h1>Social Network For Music</h1>
+
+    <% if (!showRecommendations) { %>
+        <a href="/users/login"><h3>Esegui il login</h3></a>
+    <% } else { %>
+        <% if (tracks) { %>
+            <div class="mb-4">
+                <h3 class="mb-4">Canzoni consigliate</h3>
+                <% for (let track of tracks) { %>
+                    <%- include('partials/songRow', {track: track, showRemoveButton: false})%>
+                <% } %>
+            </div>
+        <% } else { %>
+            <p>Non è stato possibile trovare tracce consigliate</p>
+        <% } %>
+    <% } %>

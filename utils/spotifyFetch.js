@@ -82,26 +82,32 @@ module.exports.fetchGenres = async function() {
     }
 }
 
-module.exports.getTrackById = async function(id) {
+module.exports.fetchTrackById = async function(id) {
     const url = "https://api.spotify.com/v1/tracks/" + id
     const response = await fetchWithToken(url)
     return response
 }
 
-module.exports.getAlbumById = async function(id) {
+module.exports.fetchAlbumById = async function(id) {
     const url = "https://api.spotify.com/v1/albums/" + id
     const response = await fetchWithToken(url)
     return response
 }
 
-module.exports.getArtistById = async function(id) {
+module.exports.fetchArtistById = async function(id) {
     const url = "https://api.spotify.com/v1/artists/" + id
     const response = await fetchWithToken(url)
     return response
 }
 
-module.exports.getArtistTopTracks = async function(id) {
+module.exports.fetchArtistTopTracks = async function(id) {
     const url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=IT`
+    const response = await fetchWithToken(url)
+    return response
+}
+
+module.exports.fetchRecommendations = async function(genre, artists) {
+    const url = `https://api.spotify.com/v1/recommendations?seed_artists=${artists}&seed-genres=${genre}`
     const response = await fetchWithToken(url)
     return response
 }
@@ -111,19 +117,19 @@ module.exports.getArtistTopTracks = async function(id) {
 
 
 
-module.exports.getTracks = async function(name) {
+module.exports.fetchTracks = async function(name) {
     return await authorizedSearch("track", name)
 }
 
-module.exports.getAlbums = async function(name) {
+module.exports.fetchAlbums = async function(name) {
     return await authorizedSearch("album", name)
 }
 
-module.exports.getArtists = async function(name) {
+module.exports.fetchArtists = async function(name) {
     return await authorizedSearch("artist", name)
 }
 
-module.exports.getAll = async function(name) {
+module.exports.fetchAll = async function(name) {
     return await authorizedSearch("track,artist,album", name)
 }
 

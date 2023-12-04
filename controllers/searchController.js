@@ -15,7 +15,7 @@ module.exports.searchTracks = async function(req,res) {
     */
     try {
         const query = req.params.q
-        const spotifyResponse = await spotifyFetch.getTracks(query)
+        const spotifyResponse = await spotifyFetch.fetchTracks(query)
         const results = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
 
         res.format({
@@ -41,7 +41,7 @@ module.exports.searchAlbums = async function(req,res) {
     */
     try {
         const query = req.params.q
-        const spotifyResponse = await spotifyFetch.getAlbums(query)
+        const spotifyResponse = await spotifyFetch.fetchAlbums(query)
         const results = spotifyResponse.albums.items.map(spotifyParser.reducedFilterAlbumFields)
 
         res.format({
@@ -67,7 +67,7 @@ module.exports.searchArtists = async function(req,res) {
     */
     try {
         const query = req.params.q
-        const spotifyResponse = await spotifyFetch.getArtists(query)
+        const spotifyResponse = await spotifyFetch.fetchArtists(query)
         const results = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
 
         res.format({
@@ -93,7 +93,7 @@ module.exports.searchAll = async function(req,res) {
     */
     try {
         const query = req.params.q
-        const spotifyResponse = await spotifyFetch.getAll(query)
+        const spotifyResponse = await spotifyFetch.fetchAll(query)
         const tracks = spotifyResponse.tracks.items.map(spotifyParser.filterTrackFields)
         const albums = spotifyResponse.albums.items.map(spotifyParser.reducedFilterAlbumFields)
         const artists = spotifyResponse.artists.items.map(spotifyParser.filterArtistFields)
