@@ -15,9 +15,11 @@ const swaggerFile = require('./docs/swagger_output.json')
 
 const app = express()
 
-const PORT = 8585;
+const PORT = process.env.PORT || 3000
 const HOST = '0.0.0.0';
 app.listen(PORT, HOST);
+console.log(`Server listenting on ${HOST}:${PORT}`)
+
 
 
 
