@@ -14,12 +14,6 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./docs/swagger_output.json')
 
 const app = express()
-const PORT = process.env.PORT || 3000
-app.listen(PORT, 'localhost')
-
-//console.log(`Server listenting on ${HOST}:${PORT}`)
-
-
 
 
 //setup session
