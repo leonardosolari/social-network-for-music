@@ -82,6 +82,10 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 connectDB()
 
+//favicon
+const favicon = require('serve-favicon');
+app.use(favicon(path.join(__dirname, 'public', '/images/favicon.ico')))
+
 
 
 // catch 404 and forward to error handler
