@@ -1,24 +1,47 @@
 <% layout('layouts/boilerplate')%>
-<div class="row">
-    <div class="col-md-6">
-        <img src="<%= album.image %>" alt="">
+<div class="row mb-5">
+    <div class="col-md-6  album-top-bar">
+        <img class="album-page-img" src="<%= album.image %>" alt="">
+        <img src="<%= album.image %>" class="blur">
     </div>
     
-    <div class="col-md-6">
-        <h1><%= album.name %></h1>
-        <h3>
-            <% let artistsString = "" %>
-            <% for (let artist of album.artists) { %>
-                <% artistsString += `${artist.name}, ` %>
-            <% } %>
-            <% artistsString = artistsString.replace(/,\s*$/, "") %>
-            <%= artistsString %>
-        </h3>
-        <h4><%= album.release_date %></h4>
+    <div class="col-md-6 align-self-center">
+        <h1 class="name"><%= album.name %></h1>
+        
+        <div class="row">
+            <div class="col-12 align-self-center">
+                <h3>
+                    <% let artistsString = "" %>
+                    <% let iterations = album.artists.length %>
+                    <% for (let artist of album.artists) { %>
+                        <% if (!--iterations) { %>
+                            <% artistsString += `${artist.name}` %>
+                        <% } else { %>
+                            <% artistsString += `${artist.name} ${"\267"} ` %>
+                        <% } %>
+                    <% } %>
+                    <% artistsString = artistsString.replace(/,\s*$/, "") %>
+                    <img src="/images/person-fill.svg" alt="" style="width: 25px; height: 25px;"> <%= artistsString %>
+                </h3>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12 align-self-center">
+                <h4><img src="/images/calendar3.svg" alt="" style="width: 20px; height: 20px;"> <%= album.release_date %></h4>
+            </div>
+        </div>
+        
+        <h5><%= album.tracks.length %> brani</h5>
     </div>
 </div>
 
-<div class="mt-6">
+
+
+<div class="mt-5">
+    <h3>Tracce</h3>
+    <hr class="solid">
     <% for (let track of album.tracks) { %>
         <%- include('../partials/songRow', {track: track, showRemoveButton: false})%>
     <% } %>

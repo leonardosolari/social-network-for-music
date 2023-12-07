@@ -2,3 +2,23 @@
   width: 200px;
   height: 38px;
 }
+
+.album-page-img {
+  width: 70%;
+}
+
+.album-top-bar img.blur {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 512px;
+  filter: blur(51.2px);
+  opacity: .07;
+}
+
+h1.name {
+  font-size: 50px;
+  font-weight: bolder;
+}

@@ -121,9 +121,7 @@ module.exports.login = async function(req, res, next) {
                 return next(err);
               }
               req.flash("success", 'Login effettuato con successo');
-                const redirectTo = req.session.redirectTo || '/';
-                delete req.session.redirectTo;
-                res.redirect(redirectTo);
+                res.redirect('/');
             });
           })(req, res, next);
 

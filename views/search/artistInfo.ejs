@@ -1,22 +1,30 @@
 <% layout('layouts/boilerplate')%>
-<img src="<%= artist.image %>" alt="">
-<h1><%= artist.name %></h1>
-<h3>Followers: <%= artist.followers %></h3>
-<h4><%= artist.genres %></h4>
-
-<% if (currentUser) { %>
-    <% if (!user.favorite_artists.includes(artist.id)) { %>
-        <form action="/search/artist/<%= artist.id %>/follow" method="post">
-            <button class="btn btn-primary" type="submit">Segui</button>
-        </form>
-    <% } else { %>
-        <form action="/search/artist/<%= artist.id %>/unfollow" method="post">
-            <button class="btn btn-warning" type="submit">Non seguire più</button>
-        </form>
-    <% } %>
-
+<div class="row mb-5">
+    <div class="col-md-6">
+        <img src="<%= artist.image %>" alt="" class="album-page-img">
+    </div>
     
-<% } %>
+    <div class="col-md-6 align-self-center">
+        <h1 class="name"><%= artist.name %></h1>
+        <h3><img src="/images/people-fill.svg" alt="" style="width: 25px; height: 25px;"> Followers: <%= artist.followers %></h3>
+        <h4><img src="/images/boombox-fill.svg" alt="" style="width: 25px; height: 25px;"> <%= artist.genres %></h4>
+
+        <% if (currentUser) { %>
+            <% if (!user.favorite_artists.includes(artist.id)) { %>
+                <form action="/search/artist/<%= artist.id %>/follow" method="post">
+                    <button class="btn btn-primary" type="submit">Segui</button>
+                </form>
+            <% } else { %>
+                <form action="/search/artist/<%= artist.id %>/unfollow" method="post">
+                    <button class="btn btn-warning" type="submit">Non seguire più</button>
+                </form>
+            <% } %>
+
+            
+        <% } %>
+    </div>
+    
+</div>
 
 <div class="mb-4 mt-5">
     <h3 class="mb-4">Canzoni più popolari</h3>

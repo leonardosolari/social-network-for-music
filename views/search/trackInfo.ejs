@@ -1,16 +1,43 @@
 <% layout('layouts/boilerplate')%>
-<img src="<%= track.image %>" alt="">
-<h1><%= track.name %></h1>
-<a href="/search/album/<%= track.album.id %>"><h3><%= track.album.name %></h3></a>
-<h4><%= track.album.release_date %></h4>
-<p>Durata: <%= track.duration %></p>
-<p id="songId" style="display: none;" value="<%= track.id %>"><%= track.id %></p>
+
+<div class="row mb-5">
+  <div class="col-md-6">
+    <img src="<%= track.image %>" class="album-page-img">
+  </div>
+
+  <div class="col-lg-6 align-self-center">
+    <h1 class="name"><%= track.name %></h1>
+    
+    <div class="row">
+      <div class=" col-12 align-self-center">
+        <a href="/search/album/<%= track.album.id %>" style="text-decoration: none;">
+          <h3 class="text-dark"><img src="/images/disc.svg" alt="" style="width: 25px; height: 25px;"> <%= track.album.name %> <img src="/images/link.svg" alt="" style="width: 15px; height: 15px;"></h3>
+        </a>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 align-self-center">
+        <h4><img src="/images/calendar3.svg" alt="" style="width: 25px; height: 25px;"> <%= track.album.release_date %></h4>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 align-self-center">
+        <p><img src="/images/stopwatch.svg" alt="" style="width: 25px; height: 25px;"> <%= track.duration %></p>
+      </div>
+    </div>
+    <p id="songId" style="display: none;" value="<%= track.id %>"><%= track.id %></p>
 
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#playlistModal">
-    Aggiungi a una playlist
-  </button>
+  <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#playlistModal">
+      Aggiungi a una playlist
+    </button>
+  </div>
+</div>
+
+
   
   <!-- Modal -->
   <div class="modal fade" id="playlistModal" tabindex="-1" aria-labelledby="playlistModalLabel" aria-hidden="true" data-bs-backdrop="static">
