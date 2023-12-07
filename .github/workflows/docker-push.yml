@@ -30,4 +30,4 @@ jobs:
           secrets: |
             "SPOTIFY_CLIENT_ID=${{secrets.SPOTIFY_CLIENT_ID}}"
             "SPOTIFY_CLIENT_SECRET=${{secrets.SPOTIFY_CLIENT_SECRET}}"
-            "MONGODB_URI=${{secrest.MONGODB_URI}}"
+            "MONGODB_URI=${{secrets.MONGODB_URI}}"
