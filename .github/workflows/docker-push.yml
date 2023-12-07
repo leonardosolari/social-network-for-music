@@ -27,7 +27,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: leonardosolari/social-network-for-music:latest
-          secrets: |
-            "SPOTIFY_CLIENT_ID=${{secrets.SPOTIFY_CLIENT_ID}}"
-            "SPOTIFY_CLIENT_SECRET=${{secrets.SPOTIFY_CLIENT_SECRET}}"
-            "MONGODB_URI=${{secrets.MONGODB_URI}}"
+          build-args: |
+            SPOTIFY_CLIENT_ID=${{secrets.SPOTIFY_CLIENT_ID}}
+            SPOTIFY_CLIENT_SECRET=${{secrets.SPOTIFY_CLIENT_SECRET}}
+            MONGODB_URI=${{secrets.MONGODB_URI}}
