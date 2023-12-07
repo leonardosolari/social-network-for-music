@@ -40,11 +40,34 @@
             <% if(currentUser._id == req_id) {%>
                 <div class="text-center">
                 <a href="/users/edit/<%= currentUser._id %>" class="btn btn-success">Modifica</a>
-                <a href="/users/change-password/<%= currentUser._id %>" class="btn btn-primary">Cambia Password</a>
-                <a href="/users/delete/<%= currentUser._id %>" class="btn btn-danger">Elimina account</a>
+                <a href="/users/change-password/<%= currentUser._id %>" class="btn btn-warning">Cambia Password</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                  Elimina Account
+                </button>
                 </div>
             <% } %>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Conferma</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Sei sicuro di voler eliminare l'account? Una volta fatto non potrai tornare indietro
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <a href="/users/delete/<%= currentUser._id %>" class="btn btn-primary">Conferma</a>
         </div>
       </div>
     </div>
