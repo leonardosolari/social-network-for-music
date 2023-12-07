@@ -28,6 +28,6 @@ jobs:
           push: true
           tags: leonardosolari/social-network-for-music:latest
           build-args: |
-            SPOTIFY_CLIENT_ID="${{secrets.SPOTIFY_CLIENT_ID}}"
-            SPOTIFY_CLIENT_SECRET="${{secrets.SPOTIFY_CLIENT_SECRET}}"
+            SPOTIFY_CLIENT_ID=${{secrets.SPOTIFY_CLIENT_ID}}
+            SPOTIFY_CLIENT_SECRET=${{secrets.SPOTIFY_CLIENT_SECRET}}
             MONGODB_URI=${{secrets.MONGODB_URI}}
