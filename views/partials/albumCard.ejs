@@ -1,9 +1,9 @@
-<div class="col-lg-3 me-3 mt-2">
+<div class="col-sm-2 me-3 mt-2 mx-auto">
     <div class="card">
         <a href="/search/album/<%= album.id %>"><img src="<%= album.image %>" class="card-img-top" alt="..." style="width: 100%;"></a>
         <div class="card-body mt-3">
-            <h5 class="card-title"><%= album.name%></h5>
-            <p class="card-text pt-2 pb-3">
+            <h5 class="card-title text-truncate"><%= album.name%></h5>
+            <p class="card-text pt-2 pb-3 text-trucate">
                 <% let artistsString = "" %>
                 <% for (let artist of album.artists) { %>
                     <% artistsString += `${artist.name}, ` %>

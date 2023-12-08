@@ -11,29 +11,31 @@
     </div>
 <% } %>
 
-
 <% if (albums) { %>
-    <div class="container">
-        <h3>Album</h3>
-        <div class="d-flex mb-4" style="overflow-x: scroll;">
-            <% for (let album of albums) { %>
-                <%- include('../partials/albumCard', {album: album})%>
-            <% } %>
+    <div class="row">
+        <div class="container">
+            <h3>Album</h3>
+            <div class="d-flex mb-4">
+                <% for (let album of albums) { %>
+                    <%- include('../partials/albumCard', {album: album})%>
+                <% } %>
+            </div>
         </div>
     </div>
 <% } %>
 
-
 <% if (artists) { %>
     <div class="container">
         <h3>Artisti</h3>
-        <div class="d-flex mb-4" style="overflow-x: scroll;">
+        <div class="d-flex mb-4">
             <% for (let artist of artists) { %>
                 <%- include('../partials/artistCard', {artist: artist})%>
             <% } %>
         </div>
     </div>
 <% } %>
+
+<hr>
 
 <% if (users && users.length >= 1) { %>
     <div class="container">
@@ -45,6 +47,8 @@
         </ul>
     </div>
 <% } %>
+
+<hr>
 
 <% if (playlist && playlist.length >= 1) { %>
     <div class="container">

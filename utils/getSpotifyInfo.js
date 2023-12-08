@@ -63,3 +63,30 @@ module.exports.getRecommendations = async function (genre, artists) {
         console.log(error)
     }
 }
+
+module.exports.getSpotifyTopGlobal = async function() {
+    try {
+        const spotifyResponse = await spotifyFetch.fetchPlaylistById("37i9dQZEVXbMDoHDwVN2tF")
+        const trackObjects = []
+        for (let object of spotifyResponse.tracks.items) {
+            trackObjects.push(object)
+        }
+
+        const results = []
+
+        for (let track of trackObjects) {
+            results.push(track.track.id)
+        }
+
+        const tracks = []
+        for (let track of results) {
+            const result = await this.getTrackById(track)
+            tracks.push(result)
+        }
+
+        return tracks
+       
+    } catch (error) {
+        console.log(error)
+    }
+}

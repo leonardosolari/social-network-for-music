@@ -112,6 +112,12 @@ module.exports.fetchRecommendations = async function(genre, artists) {
     return response
 }
 
+module.exports.fetchPlaylistById = async function(id) {
+    const url = `https://api.spotify.com/v1/playlists/${id}?fields=tracks.items.track(id)`
+    const response = await fetchWithToken(url)
+    return response
+}
+
 
 
 

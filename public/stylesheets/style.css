@@ -22,3 +22,8 @@ h1.name {
   font-size: 50px;
   font-weight: bolder;
 }
+
+.cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

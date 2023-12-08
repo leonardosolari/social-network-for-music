@@ -19,5 +19,6 @@ router.get('/users/:q', ensureAuth, searchController.searchUsers)
 router.get('/playlist/:q', ensureAuth, searchController.searchPlaylist)
 router.post('/artist/:id/follow', ensureAuth, searchController.followArtist)
 router.post('/artist/:id/unfollow', ensureAuth, searchController.unfollowArtist)
+router.get('/global', searchController.getTopGlobal)
 
 module.exports = router

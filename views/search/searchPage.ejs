@@ -1,3 +1,20 @@
 <% layout('layouts/boilerplate')%>
 
 <%- include('../partials/searchBar') %>
+
+<% if (tracks) { %>
+    <h3 class="mt-5">Le più ascoltate</h3>
+    <div class="row">
+        <div class="col-6 mb-4">
+            <% for (let i = 0; i < tracks.length/2; i++) { %>
+                <%- include('../partials/songRow', {track: tracks[i], showRemoveButton: false})%>
+            <% } %>
+        </div>
+
+        <div class="col-6 mb-4">
+            <% for (let i = tracks.length/2; i < tracks.length; i++) { %>
+                <%- include('../partials/songRow', {track: tracks[i], showRemoveButton: false})%>
+            <% } %>
+        </div>
+    </div>
+<% } %>

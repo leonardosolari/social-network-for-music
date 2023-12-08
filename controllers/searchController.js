@@ -185,6 +185,22 @@ module.exports.searchPlaylist = async function(req, res) {
 }
 
 
+module.exports.getTopGlobal = async function(req, res) {
+    
+    try {
+        const results = await spotifyInfo.getSpotifyTopGlobal()
+        const tracks = []
+        for (let track of results) {
+            const result = await spotifyInfo.getTrackById(track)
+            tracks.push(result)
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+    }
+}
+
+
 
 
 
@@ -342,10 +358,12 @@ module.exports.unfollowArtist = async function(req, res) {
  */
 
 
-module.exports.renderSearchPage = function(req, res) {
+module.exports.renderSearchPage = async function(req, res) {
     /*
     #swagger.tags = ["Search"]
     #swagger.summary = "Render search page"
     */
-    res.render('search/searchPage')
+
+    const topGlobal = await spotifyInfo.getSpotifyTopGlobal()
+    res.render('search/searchPage', {tracks: topGlobal})
 }
