@@ -1,0 +1,18 @@
+<% layout('layouts/boilerplate')%>
+<div class="container mb-5">
+    <h1 class="name">Le tue playlist</h1>
+    <% for (let playlist of userPlaylists) { %>
+        <%- include('../partials/playlistCard', {playlist: playlist})%>
+    <% } %>
+
+    <form action="/playlist/create">
+        <button class="btn btn-success btn-block mb-3 mt-5">Crea nuova playlist</button>
+    </form>
+</div>
+
+<div class="container mt-5">
+    <h1 class="name">Playlist salvate</h1>
+    <% for (let playlist of savedPlaylists) { %>
+        <%- include('../partials/playlistCard', {playlist: playlist})%>
+    <% } %>
+</div>

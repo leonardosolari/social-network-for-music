@@ -54,7 +54,7 @@ module.exports.userPlaylists = async function(req, res) {
 
     res.format({
         'text/html': function () {
-            res.render('playlist/userPlaylist', {userPlaylists, savedPlaylists: savedPlaylists})
+            res.render('playlist/userPlaylist2', {userPlaylists, savedPlaylists: savedPlaylists})
         },
         'application/json': function() {
             res.status(200).send(response)

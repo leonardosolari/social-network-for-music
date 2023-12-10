@@ -4,6 +4,14 @@
     <% if (!showRecommendations) { %>
         <a href="/users/login"><h3>Esegui il login</h3></a>
     <% } else { %>
+        
+        <% if (playlist) { %>
+         <h3 class="mt-5">Playlist pubbliche</h3>
+         <% for (let pl of playlist) { %>
+            <%- include('partials/playlistCard', {playlist: pl})%>
+        <% } %>
+        <% } %>
+        
         <% if (tracks) { %>
             <h3 class="mt-5">Canzoni consigliate</h3>
             <div class="row">

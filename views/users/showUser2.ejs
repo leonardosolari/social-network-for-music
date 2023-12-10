@@ -2,9 +2,9 @@
 <div class="row text-center">
     <div class="col-12 align-self-center">
         <h1 class="name mb-5">Profilo Utente</h1>
-        <h3 class="mb-3"><img src="/images/person-fill.svg" alt="" style="width: 30px; height: 30px;"> Username: <a class="btn btn-light"><%= username %></a></h3> 
-        <h3 class="mb-3"><img src="/images/envelope-at-fill.svg" alt="" style="width: 30px; height: 30px;"> Email: <a class="btn btn-light"><%= email %></a></h3>
-        <h3 class="mb-3"><img src="/images/boombox-fill.svg" alt="" style="width: 30px; height: 30px;"> Genere preferito: <a class="btn btn-light"><%= fav_genres[0] %></a></h3>
+        <h3 class="mb-3"><img src="/images/person-fill.svg" alt="" style="width: 30px; height: 30px;"> Username: <a class="btn btn-light user-token"><%= username %></a></h3> 
+        <h3 class="mb-3"><img src="/images/envelope-at-fill.svg" alt="" style="width: 30px; height: 30px;"> Email: <a class="btn btn-light user-token"><%= email %></a></h3>
+        <h3 class="mb-3"><img src="/images/boombox-fill.svg" alt="" style="width: 30px; height: 30px;"> Genere preferito: <a class="btn btn-light user-token"><%= fav_genres[0] %></a></h3>
         <h3 class="mb-3"><img src="/images/mic-fill.svg" alt="" style="width: 30px; height: 30px;">Artisti preferiti: 
             <% for (let artist of fav_artists) { %>
                 <a href="/search/artist/<%= artist.id %>" class="btn btn-light"><%= artist.name %></a>

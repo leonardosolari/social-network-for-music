@@ -40,3 +40,13 @@ h1.name {
   display:flex;
   justify-content:center;
 }
+
+.user-token {
+  background-color: #a9a9a9;
+}
+
+.playlist-card {
+  width: 15em;
+  flex-direction: row;
+  margin: 5px;
+}
