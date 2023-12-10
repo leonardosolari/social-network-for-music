@@ -1,9 +1,11 @@
 <% layout('layouts/boilerplate')%>
-<div class="container">
-    <div class="card shadow">
-        <div class="card-title">Modifica Utente</div>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+    <div class="card shadow edit-playlist-card">
+        
         <div class="card-body"></div>
-        <div class="row justify-content-center">
+        <h4 class="card-title text-center">Modifica Utente</h4>
+        <div class="row justify-content-center mt-3">
             <div class="col-md-6">
 
                 <form action="/users/edit/<%= currentUser._id %>" method="POST">
@@ -34,6 +36,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
 </div>
 </div>

@@ -35,28 +35,30 @@
     </div>
 <% } %>
 
-<hr>
+
 
 <% if (users && users.length >= 1) { %>
+    <hr>
     <div class="container">
         <h3>Utenti</h3>
-        <ul>
             <% for (let user of users) { %>
-                <li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
+                <a href="/users/<%= user.id %>" class="btn btn-secondary">
+                    <img src="/images/person-fill.svg" alt="" style="width: 30px; height: 30px;"> <%= user.username %>
+                </a>
             <% } %>
-        </ul>
     </div>
 <% } %>
 
-<hr>
+
 
 <% if (playlist && playlist.length >= 1) { %>
-    <div class="container">
+    <hr>
+    <div class="container mb-5">
         <h3>Playlist</h3>
-        <ul>
             <% for (let pl of playlist) { %>
-                <li><a href="/playlist/<%= pl.id %>"><%= pl.name %></a></li>
+                <a href="/playlist/<%= pl.id %>" class="btn btn-secondary">
+                    <img src="/images/playlist.svg" alt="" style="width: 30px; height: 30px;"> <%= pl.name %>
+                </a>
             <% } %>
-        </ul>
     </div>
 <% } %>

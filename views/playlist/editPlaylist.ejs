@@ -1,34 +1,37 @@
 <% layout('layouts/boilerplate')%>
-<div class="container">
-    <div class="card shadow">
-        <div class="card-title">Modifica Playlist</div>
-        <div class="card-body"></div>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="row">
 
-                <form action="/playlist/<%= id %>/edit" method="POST">
+            <div class="card shadow edit-playlist-card">
 
-                    <div class="form-group mb-3">
-                        <label for="name">Nome</label>
-                        <input value="<%= name %>" type="text" class="form-control" id="name" name="name" required>
-                    </div>
+                <div class="card-body">
+                    <h4 class="card-title text-center">Modifica Playlist</h4>
 
-                    <div class="form-group mb-3">
-                        <label for="description">Descrizione</label>
-                        <input value="<%= description %>" type="text" class="form-control" id="description" name="description" required>
-                    </div>
+                    <form action="/playlist/<%= id %>/edit" method="POST">
 
-                    <div class="form-group mb-3">
-                        <label for="tags">Inserire tag separati da underscore (_)</label>
-                        <input value="<%= tags %>" type="text" class="form-control" id="tags" name="tags" placeholder="es: shrek_palude_dreamworks" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success m-3">Salva</button>
+                        <div class="form-group mb-4">
+                            <label for="name">Nome</label>
+                            <input value="<%= name %>" type="text" class="form-control" id="name" name="name" required>
+                        </div>
 
-                </form>
+                        <div class="form-group mb-4">
+                            <label for="description">Descrizione</label>
+                            <input value="<%= description %>" type="text" class="form-control" id="description"
+                                name="description" required>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="tags">Inserire tag separati da underscore (_)</label>
+                            <input value="<%= tags %>" type="text" class="form-control" id="tags" name="tags"
+                                placeholder="es: shrek_palude_dreamworks" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success m-3">Salva</button>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
+    </div>
+    </div>

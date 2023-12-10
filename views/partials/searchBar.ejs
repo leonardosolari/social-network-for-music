@@ -1,18 +1,21 @@
 <script src="/javascripts/generateSearchLink.js"></script>
 
-<div class="container">
-<form onsubmit="return generateSearchLink()" method="GET" class="d-flex mb-5">
-    <input class="form-control me-2" type="text" placeholder="Cerca..." id="searchQuery" required>
-    <button class="btn btn-success me-2" type="submit">Cerca</button>
+<div class="row">
+    <div class="col-10">
+        <form onsubmit="return generateSearchLink()" method="GET" class="d-flex mb-5">
+            <input class="form-control me-2" type="text" placeholder="Cerca..." id="searchQuery" required>
+            <button class="btn btn-success" type="submit">Cerca</button>
+    </div>
 
-    <select class="form-select flex search-filter" id="searchType" name="searchType">
-        <option value="all" selected>Tutto</option>
-        <option value="tracks">Canzoni</option>
-        <option value="albums">Album</option>
-        <option value="artists">Artisti</option>
-        <option value="users">Utenti</option>
-        <option value="playlist">Playlist</option>
-    </select>
-</form>
+    <div class="col-2">
+        <select class="form-select flex" id="searchType" name="searchType">
+            <option value="all" selected>Tutto</option>
+            <option value="tracks">Canzoni</option>
+            <option value="albums">Album</option>
+            <option value="artists">Artisti</option>
+            <option value="users">Utenti</option>
+            <option value="playlist">Playlist</option>
+        </select>
+    </div>
+    </form>
 </div>
-

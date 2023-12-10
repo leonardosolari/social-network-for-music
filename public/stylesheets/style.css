@@ -27,3 +27,16 @@ h1.name {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.edit-playlist-card {
+  width: 600px;
+}
+
+.login-card {
+  width: 500px;
+}
+
+.text-center {
+  display:flex;
+  justify-content:center;
+}

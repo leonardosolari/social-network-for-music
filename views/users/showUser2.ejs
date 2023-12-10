@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate')%>
+<div class="row text-center">
+    <div class="col-12 align-self-center">
+        <h1 class="name mb-5">Profilo Utente</h1>
+        <h3 class="mb-3"><img src="/images/person-fill.svg" alt="" style="width: 30px; height: 30px;"> Username: <a class="btn btn-light"><%= username %></a></h3> 
+        <h3 class="mb-3"><img src="/images/envelope-at-fill.svg" alt="" style="width: 30px; height: 30px;"> Email: <a class="btn btn-light"><%= email %></a></h3>
+        <h3 class="mb-3"><img src="/images/boombox-fill.svg" alt="" style="width: 30px; height: 30px;"> Genere preferito: <a class="btn btn-light"><%= fav_genres[0] %></a></h3>
+        <h3 class="mb-3"><img src="/images/mic-fill.svg" alt="" style="width: 30px; height: 30px;">Artisti preferiti: 
+            <% for (let artist of fav_artists) { %>
+                <a href="/search/artist/<%= artist.id %>" class="btn btn-light"><%= artist.name %></a>
+              <% } %>
+        </h3>
+
+        <% if(currentUser._id == req_id) {%>
+            <div class="text-center">
+            <a href="/users/edit/<%= currentUser._id %>" class="btn btn-success m-1">Modifica</a>
+            <a href="/users/change-password/<%= currentUser._id %>" class="btn btn-warning m-1">Cambia Password</a>
+            <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+              Elimina Account
+            </button>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Conferma</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Sei sicuro di voler eliminare l'account? Una volta fatto non potrai tornare indietro
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <a href="/users/delete/<%= currentUser._id %>" class="btn btn-primary">Conferma</a>
+        </div>
+      </div>
+    </div>
+  </div>

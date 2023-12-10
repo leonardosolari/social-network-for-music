@@ -7,6 +7,24 @@
 
   <div class="col-lg-6 align-self-center">
     <h1 class="name"><%= track.name %></h1>
+
+    <div class="row">
+      <div class="col-12 align-self-center">
+          <h3>
+              <% let artistsString = "" %>
+              <% let iterations = track.artists.length %>
+              <% for (let artist of track.artists) { %>
+                  <% if (!--iterations) { %>
+                      <% artistsString += `${artist.name}` %>
+                  <% } else { %>
+                      <% artistsString += `${artist.name} ${"\267"} ` %>
+                  <% } %>
+              <% } %>
+              <% artistsString = artistsString.replace(/,\s*$/, "") %>
+              <img src="/images/mic-fill.svg" alt="" style="width: 25px; height: 25px;"> <%= artistsString %>
+          </h3>
+      </div>
+    </div>
     
     <div class="row">
       <div class=" col-12 align-self-center">

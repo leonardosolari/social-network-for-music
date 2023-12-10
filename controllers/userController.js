@@ -166,7 +166,7 @@ module.exports.showUser = async function (req,res) {
         }
         res.format({
             'text/html': function () {
-                res.render('users/showUser', { 
+                res.render('users/showUser2', { 
                     id: user.id, 
                     email: user.email, 
                     username: user.username, 

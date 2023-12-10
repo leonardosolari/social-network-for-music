@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate')%>
-<div class="container d-flex justify-content-center align-items-center mt-5">
+<div class="container d-flex justify-content-center align-items-center mt-5 mb-3">
     <div class="row">
         <div>
-            <div class="card shadow">
+            <div class="card shadow login-card">
                 <div class="card-body">
-                    <h5 class="card-title">Accedi</h5>
+                    <h4 class="card-title text-center mb-4">Accedi</h4>
                     <form action="/users/login" method="POST" class="validated-form" novalidate>
                         <div class="mb-3">
                             <label class="form-label" for="username">Username</label>
@@ -20,11 +20,17 @@
                                 Ok!
                             </div>
                         </div>
-                        <button class="btn btn-success btn-block">Login</button>
+                        <button class="btn btn-success">Login</button>
                     </form>
 
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row d-flex">
+    <div class="col-12 text-center">
+        <p>Non hai un account? <a href="/users/register">Registrati</a></p>
     </div>
 </div>
