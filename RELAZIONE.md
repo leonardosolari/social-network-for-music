@@ -335,9 +335,6 @@ La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.
   <img src="public/screenshots/profile_not_owned.png"/>
 </p>
 <p align="center">
-  <img src="public/screenshots/home_no_logged.png"/>
-</p>
-<p align="center">
   <img src="public/screenshots/edit_user.png"/>
 </p>
 <p align="center">
