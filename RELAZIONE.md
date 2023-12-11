@@ -12,13 +12,13 @@ Questo progetto ha lo scopo di realizzare un'applicazione web full stack per la 
 * **Integrazione con le API di Spotify**: possibilità di effettuare ricerche di album, artisti e brani nel catalogo di Spotify grazie alle API ufficiali e di aggiungere tracce alle playlist dell'applicazione
 
 
-##Installazione
+## Installazione
  
 Una versione live dell'applicazione sempre aggiornata all'ultima versione disponibile si può trovare all'indirizzo all'indirizzo [snm.leonardosolari.com](snm.leonardosolari.com)
 
 Il codice sorgente dell'applicazione è reperibile in una repo [Github](https://github.com/leonardosolari/social-network-for-music)
 
-###Installazione locale
+### Installazione locale
 
 Per eseguire in locale l'applicazione è sufficiente eseguire la seguente procedura: 
 
@@ -75,7 +75,7 @@ Nella repository del progetto è possibile trovare le seguenti cartelle e file d
 * `Dockerfile` utilizzato da una action github che automatizza la build di un'immagine docker dell'applicazione ogni volta che viene eseguito un push
 
 
-##Scelte implementative
+## Scelte implementative
 
 
 ### Autenticazione e autorizzazione
@@ -126,7 +126,7 @@ app.use(passport.session());
 
 ```
 
-####Middleware
+#### Middleware
 Sono stati creati dei middleware ad hoc per gestire le autorizzazioni riguardo ad alcune azioni all'interno dell'applicazione.
 Il middleware `ensureAuth` serve per proteggere gli endpoint ed assicurarsi che l'accesso a questi possa avvenire solamente da parte di un utente autenticato.
 
@@ -171,7 +171,7 @@ module.exports.isAuthor = async function(req, res, next) {
 }
 ```
 
-###Gestione delle pagine
+### Gestione delle pagine
 Per quanto riguarda il lato frontend l'applicazione utilizza EJS come motore di templating. Il punto di forza di EJS è che permette il rendering lato server di pagine HTML dinamiche utilizzando javascript, semplificando il processo di creazione dell'applicazione e permettendo di personalizzare l'interfaccia utente in base alla necessità. EJS permette l'utilizzo dei partials, ovvero parti di codice che possono essere definite una volta sola e riutilizzate in più pagine.
 
 
@@ -192,7 +192,7 @@ Per quanto riguarda il lato frontend l'applicazione utilizza EJS come motore di 
 <%- include('../partials/artistCard', {artist: artist})%>
 ```
 
-###Chiamate alle API di Spotify
+### Chiamate alle API di Spotify
 Le chiamate alle API di Spotify sono gestite all'interno del file `/utils/spotifyFetch.js`.
 Per poter effettuare una richiesta alle API di spotify è necessario possedere un token di accesso, che viene generato dalla seguente funzione: 
 
@@ -259,7 +259,7 @@ module.exports.filterTrackFields = (item) => {
 }
 ```
 
-###Database
+### Database
 La connessione al database è gestita all'interno del file `/config/database.js` tramite `mongoose`. Allo startup dell'applicazione viene effettuata un'unica connessione al database. 
 
 ```js
@@ -306,14 +306,14 @@ Collezione creata automaticamente dal modulo `session` dell'applicazione. Memori
 * **session**: cookie della sessione contenente vari dati su di essa
 
 
-###Swagger
+### Swagger
 L'interfaccia Swagger per la documentazione degli endpoint è stata realizzata tramite la libreria `swagger-ui-express`. Per quanto riguarda la definizione della specifica invece è stato utilizzato il modulo `swagger-autogen`, che si occupa automaticamente di riconoscere gli endpoint dell'applicazione. Tale modulo genera un file di specifica JSON contenente informazioni riguardanti gli endpoint, come per esempio i codici HTTP delle risposte, il body della richiesta se presente, eccetera. Grazie ad appositi commenti all'interno delle relative funzioni nei controller è stato possibile fornire anche delle brevi descrizioni degli endpoint e suddividerli in categorie. 
 La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.leonardosolari.com/docs) oppure [localhost:3000/docs](localhost:3000/docs) se l'applicazione viene eseguita localmente
 
 
-##Prove di funzionamento
+## Prove di funzionamento
 
-####Home page
+#### Home page
 <p align="center">
   <img src="public/screenshots/home_no_logged.png"/>
 </p>
@@ -321,7 +321,7 @@ La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.
   <img src="public/screenshots/home_logged.png"/>
 </p>
 
-####Utenti
+#### Utenti
 <p align="center">
   <img src="public/screenshots/login.png"/>
 </p>
@@ -347,7 +347,7 @@ La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.
   <img src="public/screenshots/confirm_delete.png"/>
 </p>
 
-####Playlist
+#### Playlist
 <p align="center">
   <img src="public/screenshots/user_playlist.png"/>
 </p>
@@ -367,7 +367,7 @@ La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.
   <img src="public/screenshots/edit_playlist.png"/>
 </p>
 
-####Ricerca
+#### Ricerca
 <p align="center">
   <img src="public/screenshots/search_page.png"/>
 </p>
@@ -387,7 +387,7 @@ La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.
   <img src="public/screenshots/artist.png"/>
 </p>
 
-####Swagger
+#### Swagger
 <p align="center">
   <img src="public/screenshots/swagger_1.png"/>
 </p>
