@@ -17,7 +17,9 @@ module.exports.create = async function(req, res) {
     #swagger.tags = ["Playlist"]
     #swagger.summary = "Create new playlist and save it in the database (AUTH required)"
     */
-    const { name, description, private } = req.body
+    const { name, description, private, tags } = req.body
+
+
     try {
         await Playlist.create({
             name: name,
@@ -25,6 +27,7 @@ module.exports.create = async function(req, res) {
             author: req.user.id, 
             collaborators: [req.user.id],
             private: private,
+            tags: tags
         })
         req.flash('success', 'Nuova playlist creata, ora puoi aggiungerci delle canzoni')
         res.redirect('/')
@@ -120,6 +123,7 @@ module.exports.editPlaylist = async function(req, res) {
     #swagger.tags = ["Playlist"]
     #swagger.summary = "Edit playlist with given id (AUTH required)"
     */
+
     try {
         const {name, description, tags} = req.body
         const playlist = await Playlist.findByIdAndUpdate(req.params.id, {name, description, tags})
@@ -163,6 +167,13 @@ module.exports.addSong = async function(req, res) {
     try {
         const playlist = await Playlist.findById(req.params.id)
         const songId = req.body.songId
+
+        if(songId == null) {
+            res.status(500)
+            req.flash('error', 'Qualcosa è andato storto')
+            return res.redirect('back')
+        }
+
         playlist.tracks.push(songId)
         await playlist.save()
         res.status(200)
@@ -204,11 +215,17 @@ module.exports.removeSong = async function(req, res) {
 module.exports.follow = async function(req, res) {
     /*
     #swagger.tags = ["Playlist"]
-    #swagger.summary = "Follow playlist with the igven id"
+    #swagger.summary = "Follow playlist with the given id"
     */
     try {
         const user = await User.findById(req.user.id)
         const playlist = await Playlist.findById(req.params.id)
+
+        if(playlist == null) {
+            res.status(500)
+            req.flash('error', 'Qualcosa è andato storto')
+            return res.redirect('back')
+        }
     
         if (!user.saved_playlists.includes(req.params.id)) {
                 user.saved_playlists.push(req.params.id)
@@ -241,6 +258,12 @@ module.exports.unfollow = async function(req, res) {
     try {
         const user = await User.findById(req.user.id)
         const playlist = await Playlist.findById(req.params.id)
+
+        if(playlist == null) {
+            res.status(500)
+            req.flash('error', 'Qualcosa è andato storto')
+            return res.redirect('back')
+        }
     
         if (user.saved_playlists.includes(req.params.id)) {
             const index = user.saved_playlists.indexOf(req.params.id)

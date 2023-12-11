@@ -196,6 +196,8 @@ module.exports.renderChangePassword = function(req, res) {
     res.render('users/changePassword')
 }
 
+
+
 module.exports.changePassword = async function(req,res) {
     /*
     #swagger.tags = ["Users"]
@@ -227,6 +229,9 @@ module.exports.changePassword = async function(req,res) {
 
     
 }
+
+
+
 
 module.exports.deleteUser = async function(req,res) {
     /*
@@ -297,14 +302,5 @@ module.exports.editUser = async function(req, res) {
     }
     
 }
-
-module.exports.followArtist = async function(req, res) {
-
-}
-
-module.exports.unfollowArtist = async function(req, res) {
-
-}
-
 
 

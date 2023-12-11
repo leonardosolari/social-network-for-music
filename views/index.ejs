@@ -1,8 +1,11 @@
 <% layout('layouts/boilerplate')%>
     <h1 class="name">Social Network For Music</h1>
 
+    
     <% if (!showRecommendations) { %>
-        <a href="/users/login"><h3>Esegui il login</h3></a>
+        <div class="col-12 mt-5 text-center">
+            <h3>Per visualizzare playlist e tracce consigliate <a href="/users/login">esegui il login</a></h3>
+        </div>
     <% } else { %>
         
         <% if (playlist) { %>

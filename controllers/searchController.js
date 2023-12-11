@@ -155,7 +155,7 @@ module.exports.searchUsers = async function(req, res) {
 }
 
 module.exports.searchPlaylist = async function(req, res) {
-        /*
+    /*
     #swagger.tags = ["Search"]
     #swagger.summary = "Get playlist by query from the database"
     */
@@ -186,7 +186,10 @@ module.exports.searchPlaylist = async function(req, res) {
 
 
 module.exports.getTopGlobal = async function(req, res) {
-    
+    /*
+    #swagger.tags = ["Search"]
+    #swagger.summary = "Get tracks from the Top50Global Spotify playlist"
+    */
     try {
         const results = await spotifyInfo.getSpotifyTopGlobal()
         const tracks = []
@@ -363,7 +366,10 @@ module.exports.renderSearchPage = async function(req, res) {
     #swagger.tags = ["Search"]
     #swagger.summary = "Render search page"
     */
-
-    const topGlobal = await spotifyInfo.getSpotifyTopGlobal()
-    res.render('search/searchPage', {tracks: topGlobal})
+    try {
+        const topGlobal = await spotifyInfo.getSpotifyTopGlobal()
+        res.render('search/searchPage', {tracks: topGlobal})
+    } catch (error) {
+        console.log(error)
+    }
 }

@@ -345,8 +345,8 @@
         "summary": "Render search page",
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -369,6 +369,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -395,6 +398,9 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -419,6 +425,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -445,6 +454,9 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -469,6 +481,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -495,6 +510,9 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -519,6 +537,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -545,6 +566,9 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -569,6 +593,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -632,6 +659,20 @@
         }
       }
     },
+    "/search/global": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Get tracks from the Top50Global Spotify playlist",
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/playlist/create": {
       "get": {
         "tags": [
@@ -665,6 +706,9 @@
                   "example": "any"
                 },
                 "private": {
+                  "example": "any"
+                },
+                "tags": {
                   "example": "any"
                 }
               }
@@ -902,7 +946,7 @@
         "tags": [
           "Playlist"
         ],
-        "summary": "Follow playlist with the igven id",
+        "summary": "Follow playlist with the given id",
         "description": "",
         "parameters": [
           {

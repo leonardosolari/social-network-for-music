@@ -13,6 +13,7 @@
                                 Ok!
                             </div>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label" for="description">Descrizione</label>
                             <input class="form-control" type="text" id="description" name="description" value="" required>
@@ -20,10 +21,18 @@
                                 Ok!
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="tags">Inserire tag separati da underscore (_)</label>
+                            <input value="" type="text" class="form-control" id="tags" name="tags"
+                                placeholder="es: shrek_palude_dreamworks">
+                        </div>
+
                         <div class="mb-3">
                             <label for="private">Rendi la playlist privata</label>
                             <input type="checkbox" value="true" id="private" name="private">
                         </div>
+
                         <button class="btn btn-success btn-block">Crea</button>
                     </form>
 
