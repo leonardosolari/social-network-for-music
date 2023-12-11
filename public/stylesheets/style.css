@@ -50,3 +50,9 @@ h1.name {
   flex-direction: row;
   margin: 5px;
 }
+
+.footer-img {
+  filter: invert(1);
+  width: 17px;
+  height: 17px;
+}
