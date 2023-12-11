@@ -12,12 +12,14 @@ Questo progetto ha lo scopo di realizzare un'applicazione web full stack per la 
 * **Integrazione con le API di Spotify**: possibilità di effettuare ricerche di album, artisti e brani nel catalogo di Spotify grazie alle API ufficiali e di aggiungere tracce alle playlist dell'applicazione
 
 
-##Installazione 
+##Installazione
+ 
 Una versione live dell'applicazione sempre aggiornata all'ultima versione disponibile si può trovare all'indirizzo all'indirizzo [snm.leonardosolari.com](snm.leonardosolari.com)
 
 Il codice sorgente dell'applicazione è reperibile in una repo [Github](https://github.com/leonardosolari/social-network-for-music)
 
 ###Installazione locale
+
 Per eseguire in locale l'applicazione è sufficiente eseguire la seguente procedura: 
 
 * Clonare localmente la repository del progetto:
@@ -72,7 +74,9 @@ Nella repository del progetto è possibile trovare le seguenti cartelle e file d
 * `app.js` che consiste nell'entry point dell'applicazione
 * `Dockerfile` utilizzato da una action github che automatizza la build di un'immagine docker dell'applicazione ogni volta che viene eseguito un push
 
+
 ##Scelte implementative
+
 
 ### Autenticazione e autorizzazione
 La fase di registrazione e autenticazione all'applicazione è stata realizzata utilizzando [passport](https://passportjs.org). Passport JS è una libreria Node.js che fornisce un middleware per l'autenticazione. Questa libreria supporta diversi tipi di autenticazione, tra cui OAuth, OpenID e Local Strategy.
