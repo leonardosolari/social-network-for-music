@@ -18,8 +18,12 @@ Una versione live dell'applicazione sempre aggiornata all'ultima versione dispon
 
 
 Per accedere registrare un nuovo utente, oppure utilizzare le seguenti credenziali:
-username: **shrek**
-password: **amofiona**
+
+```
+username: shrek
+password: amofiona
+
+```
 
 Il codice sorgente dell'applicazione è reperibile in una repo [Github](https://github.com/leonardosolari/social-network-for-music)
 
