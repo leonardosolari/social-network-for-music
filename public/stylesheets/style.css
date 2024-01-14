@@ -56,3 +56,11 @@ h1.name {
   width: 17px;
   height: 17px;
 }
+
+.myHeading img {
+  margin-right:10px;
+}
+.myHeading h1, .myHeading img {
+  display:inline-block;
+  vertical-align:middle;
+}

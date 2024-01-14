@@ -68,8 +68,9 @@ module.exports.getSpotifyTopGlobal = async function() {
     try {
         const spotifyResponse = await spotifyFetch.fetchPlaylistById("37i9dQZEVXbMDoHDwVN2tF")
         const trackObjects = []
-        for (let object of spotifyResponse.tracks.items) {
-            trackObjects.push(object)
+
+        for (let i = 0; i < 20; i++) {
+            trackObjects.push(spotifyResponse.tracks.items[i])
         }
 
         const results = []

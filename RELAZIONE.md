@@ -16,6 +16,11 @@ Questo progetto ha lo scopo di realizzare un'applicazione web full stack per la 
  
 Una versione live dell'applicazione sempre aggiornata all'ultima versione disponibile si può trovare all'indirizzo all'indirizzo [snm.leonardosolari.com](snm.leonardosolari.com)
 
+
+Per accedere registrare un nuovo utente, oppure utilizzare le seguenti credenziali:
+username: **shrek**
+password: **amofiona**
+
 Il codice sorgente dell'applicazione è reperibile in una repo [Github](https://github.com/leonardosolari/social-network-for-music)
 
 ### Installazione locale
