@@ -60,7 +60,9 @@ h1.name {
 .myHeading img {
   margin-right:10px;
 }
+
 .myHeading h1, .myHeading img {
   display:inline-block;
   vertical-align:middle;
 }
+
