@@ -93,9 +93,12 @@ In particolare ho utilizzato l'ultima che permette di autenticare gli utenti med
 Ho inoltre utilizzato il plugin `passport-local-mongoose` che semplifica l'integrazione tra passport-local e il database, gestendo automaticamente l'hashing delle password e l'inserimento di un nuovo utente nel database.
 
 ```js
+// ------------------------------------------------------
 // /models/User.js
 // plugin for passport-local-mongoose 
 UserSchema.plugin(passportLocalMongoose); 
+
+// ------------------------------------------------------
 
 // /config/passport.js
 module.exports = function (passport) {
@@ -106,6 +109,8 @@ module.exports = function (passport) {
 
 passport.serializeUser(User.serializeUser()); 
 passport.deserializeUser(User.deserializeUser());
+
+// ------------------------------------------------------
 
 // app.js
 //setup session
@@ -152,7 +157,7 @@ module.exports.ensureAuth = function (req, res, next) {
     }
 ```
 
-Il middleware `ensureOwner` protegge le azioni di modifica e cancellazione dei profili assicurandosi che le richieste a queste avvengano solo da parte del legittimo proprietario del profilo.
+Il middleware `ensureOwner` protegge le azioni di modifica e cancellazione dei profili assicurandosi che le richieste ai relaivi endpoint avvengano solo da parte del legittimo proprietario del profilo.
 
 ```js
 module.exports.ensureOwner = function(req, res, next) {
@@ -166,7 +171,7 @@ module.exports.ensureOwner = function(req, res, next) {
 ```
 
 
-Il middleware `isAuthor` si assicura che modifica, cancellazione e aggiunta e rimozione di canzoni dalle playlist possano avvenire solamente da parte dell'autore. 
+Il middleware `isAuthor` si assicura che modifica, cancellazione e aggiunta e rimozione di canzoni dalle playlist possano avvenire solamente da parte dell'autore della playlist in questione.
 
 ```js
 module.exports.isAuthor = async function(req, res, next) {
@@ -181,7 +186,7 @@ module.exports.isAuthor = async function(req, res, next) {
 ```
 
 ### Gestione delle pagine
-Per quanto riguarda il lato frontend l'applicazione utilizza EJS come motore di templating. Il punto di forza di EJS è che permette il rendering lato server di pagine HTML dinamiche utilizzando javascript, semplificando il processo di creazione dell'applicazione e permettendo di personalizzare l'interfaccia utente in base alla necessità. EJS permette l'utilizzo dei partials, ovvero parti di codice che possono essere definite una volta sola e riutilizzate in più pagine.
+Per quanto riguarda il lato frontend, l'applicazione utilizza EJS come motore di templating. Il punto di forza di EJS è che permette il rendering lato server di pagine HTML dinamiche utilizzando javascript, semplificando il processo di creazione dell'applicazione e permettendo di personalizzare l'interfaccia utente in base alla necessità. EJS permette l'utilizzo dei *partials*, ovvero parti di codice che possono essere definite una volta sola e riutilizzate in più pagine.
 
 
 **artistCard.ejs**
@@ -224,7 +229,7 @@ const generateSpotifyToken = async function() {
     return token;
 }
 ```
-e successivamente utilizzato dal seguente wrapper che permette di effettuare richieste alle utilizzando il token creato
+e successivamente utilizzato dal seguente wrapper che permette di effettuare richieste alle API utilizzando il token creato
 
 ```js
 const fetchWithToken = async function(url, options = {}) {
@@ -249,7 +254,7 @@ const fetchWithToken = async function(url, options = {}) {
 Con questa implementazione per ogni richiesta alle API di Spotify viene generato un nuovo token, scelta non ottimale ma accettabile visto che si tratta di un'applicazione di piccola scala e con pochi utenti.
 
 
-I dati ottenuti dalle API di spotify contengono spesso più dati di quelli che sono necessari, e quindi vengono filtrati dalle funzioni presenti nel file `/utils/spotifyResponseParser.js`, che restituiscono un oggetto con solo i campi desiderati.
+Le risposte ottenute dalle API di spotify contengono spesso più campi di quelli che sono necessari, e quindi vengono filtrati dalle funzioni presenti nel file `/utils/spotifyResponseParser.js`, che restituiscono un oggetto con solo i campi desiderati.
 
 ```js
 module.exports.filterTrackFields = (item) => {
@@ -306,7 +311,7 @@ Utilizzata per memorizzare i dati relativi alle playlist. Contiene i campi:
 * **followers**: elenco degli id degli utenti che hanno salvato la playlist
 * **tracks**: elenco degli id delle canzoni presenti nella playlist
 * **private**: valore booleano che indica se la playlist è privata o meno
-* **tags** stringa che costituisce i tag della playlist. Viene richiesto all'utente di inserire i tag come appunto una stringa che verrà poi gestita dai controller in cui i tag sono separati dal carattere *underscore*. 
+* **tags** stringa che costituisce i tag della playlist. Viene richiesto all'utente di inserire i tag come appunto una stringa che verrà poi gestita dai controller, in cui i tag sono separati dal carattere *underscore*. 
 
 **Sessions**:
 Collezione creata automaticamente dal modulo `session` dell'applicazione. Memorizza i dati relativi alle sessioni web. Contiene i campi: 
@@ -316,7 +321,7 @@ Collezione creata automaticamente dal modulo `session` dell'applicazione. Memori
 
 
 ### Swagger
-L'interfaccia Swagger per la documentazione degli endpoint è stata realizzata tramite la libreria `swagger-ui-express`. Per quanto riguarda la definizione della specifica invece è stato utilizzato il modulo `swagger-autogen`, che si occupa automaticamente di riconoscere gli endpoint dell'applicazione. Tale modulo genera un file di specifica JSON contenente informazioni riguardanti gli endpoint, come per esempio i codici HTTP delle risposte, il body della richiesta se presente, eccetera. Grazie ad appositi commenti all'interno delle relative funzioni nei controller è stato possibile fornire anche delle brevi descrizioni degli endpoint e suddividerli in categorie. 
+L'interfaccia Swagger per la documentazione degli endpoint è stata realizzata tramite la libreria `swagger-ui-express`. Per quanto riguarda la definizione della specifica invece è stato utilizzato il modulo `swagger-autogen`, che si occupa di riconoscere automaticamente gli endpoint dell'applicazione. Tale modulo genera un file di specifica JSON contenente informazioni riguardanti gli endpoint, come per esempio i codici HTTP delle risposte, il body della richiesta se presente, eccetera. Grazie ad appositi commenti all'interno delle relative funzioni nei controller è stato possibile fornire anche delle brevi descrizioni degli endpoint e suddividerli in categorie. 
 La documentazione è reperibile all'indirizzo [snm.leonardosolari.com/docs](snm.leonardosolari.com/docs) oppure [localhost:3000/docs](localhost:3000/docs) se l'applicazione viene eseguita localmente
 
 
